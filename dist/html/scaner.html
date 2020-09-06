@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Camera Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+    <style>
+        canvas, video {border: 1px solid gray}
+    </style>
+</head>
+<body>
+    <h1>HTML5カメラ</h1>
+    <video id="camera" width="300" height="200"></video>
+    <canvas id="picture" width="300" height="200"></canvas>
+    <form>
+        <button type="button" id="shutter">シャッター</button>
+        <button type="button" id="submit">submit</button>
+    </form>
+    <script>
+        window.onload = () => {
+            const video  = document.querySelector("#camera");
+            const canvas = document.querySelector("#picture");
+            /** カメラ設定 */
+            const constraints = {
+                audio: false,
+                video: {
+                    width: 300,
+                    height: 200,
+                    facingMode: "user"   // フロントカメラを利用する
+                    //facingMode: { exact: "environment" }  // リアカメラを利用する場合
+                }
+            }
+            /*カメラを<video>と同期*/
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then( (stream) => {
+                    video.srcObject = stream;
+                    video.onloadedmetadata = (e) => {video.play()};
+                })
+                .catch((err) => {
+                    console.log(err.name + ": " + err.message);
+                });
+
+            /* シャッターボタン */
+            document.querySelector("#shutter").addEventListener("click", () => {
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            });
+            /* submit button */
+            document.getElementById("submit").onclick = (event) => {
+                const canvas = document.getElementById("picture");
+                const dataurl = canvas.toDataURL("image/png");
+                const binary = atob(dataurl.split(',')[1])
+                const buffer = new Uint8Array(binary.length)
+                for (let i=0; i<binary.length; i++){
+                    buffer[i] = binary.charCodeAt(i)
+                }
+                const blob = new Blob([buffer.buffer],{type:"image/png"})
+
+                const formdata = new FormData()
+                const now = moment().format('YYYYMMDDHHmmss')
+                formdata.append('musicSheetImage',blob,`${now}.png`)
+
+                axios.post('http://localhost:3000/scan/upload',formdata,{
+                    headers:{'content-type':'multipart/form-data'}
+                })
+            }
+        };
+    </script>
+
+    <form action="http://localhost:3000/scan/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="musicSheetImage"/>
+        <input type="submit">
+    </form>
+</body>
+</html>
