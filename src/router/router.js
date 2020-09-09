@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import studio from '../components/Pages/Studio.vue'
+import scan from '../components/Pages/Scan.vue'
 import menu from '../components/Pages/Menu.vue'
 import training from '../components/Pages/Training.vue'
 import analysis from '../components/Pages/Analysis.vue'
@@ -13,6 +14,10 @@ export default new Router({
         {
             path: '/studio',
             component: studio
+        },
+        {
+            path: '/scan',
+            component: scan
         },
         {
             path: '/menu',
