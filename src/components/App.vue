@@ -23,11 +23,9 @@ export default {
     methods: {
         hide: function(){
             this.seen = false
-            console.log("hide!!")
         },
         show: function(){
             this.seen = true
-            console.log("show!!")
         }
     }
 }
@@ -36,21 +34,30 @@ export default {
 <style scoped>
 #show-links {
     background: gray;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     width: 100px; /* 要検討 */
     opacity: 0.5; /* 要検討 */
+    z-index: 100;
 }
 #hide-links {
     background: black;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100px; /* 要検討 */
+    opacity: 0.5; /* 要検討 */
+    z-index: 100;
+}
+router-view {
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    width: 100px; /* 要検討 */
-    opacity: 0.5; /* 要検討 */
+    width: 100%;
+    z-index: 0;
 }
-
 </style>

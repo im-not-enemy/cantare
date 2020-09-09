@@ -1,16 +1,11 @@
 <template>
     <div>
-        <button v-on:click="release">release</button>
+        <button v-on:click="$emit('released')">release</button>
     </div>
 </template>
 
 <script>
 export default {
-    methods: {
-        release: function(){
-            console.log("released.")
-        }
-    }
 }
 </script>
 
