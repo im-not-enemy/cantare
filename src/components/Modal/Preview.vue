@@ -1,12 +1,12 @@
 <template>
     <div id="app">
-        <h1>Preview</h1>
+        <img v-bind:src="this.img">
     </div>
 </template>
 
 <script>
 export default {
-    
+    props: ['img'] //base64
 }
 </script>
 
@@ -19,10 +19,8 @@ export default {
     width: 100%;
     z-index: 50;
     background: #DDFFFF;
-    opacity: 0.5;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 </style>

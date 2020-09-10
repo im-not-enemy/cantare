@@ -1,11 +1,11 @@
 <template>
     <div>
         <h2>Scan</h2>
-        <video id="camera" v-bind:srcObject.prop="stream" autoplay width="100%"></video>
+        <video id="camera" v-bind:srcObject.prop="stream" autoplay muted width="100%"></video>
         <div id="bar">
             <ShutterButton v-on:released="showPreview"></ShutterButton>
         </div>
-        <Preview v-if="this.preview"></Preview>
+        <Preview v-if="this.preview" v-bind:img="this.capture"></Preview>
     </div>
 </template>
 
@@ -20,22 +20,41 @@ export default {
     data: function(){
         return {
             stream: undefined,
-            preview: undefined
+            preview: undefined,
+            capture: undefined
         }
     },
     methods: {
         showPreview: function(){
             this.preview = true
+            const camera = document.getElementById('camera')
+            const canvas = document.createElement('canvas') //エレメント作成
+
+            canvas.width = camera.clientWidth
+            canvas.height = camera.clientHeight
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(camera, 0, 0, camera.clientWidth, camera.clientHeight); //実質描画なし
+
+            this.capture = canvas.toDataURL("image/png");
+
+            this.stopVideo()
+            
+        },
+        stopVideo: function(){
+            const tracks = this.stream.getTracks()
+            tracks.forEach(track => track.stop())
+            document.getElementById('camera').srcObect = null
         }
     },
     created: async function(){
         this.stream = await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
-                facingMode: {exact: "environment"}
+                //facingMode: {exact: "environment"}
+                facingMode: "user"
             }
         })
-        this.camera.requestFullscreen()
     }
 }
 </script>
