@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Scan</h2>
-        <video id="camera" v-bind:srcObject.prop="stream" autoplay muted width="100%"></video>
+        <video id="camera" v-bind:srcObject.prop="stream" playsinline autoplay muted width="100%"></video>
         <div id="bar">
             <ShutterButton v-on:released="showPreview"></ShutterButton>
         </div>
@@ -51,8 +51,8 @@ export default {
         this.stream = await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
-                //facingMode: {exact: "environment"}
-                facingMode: "user"
+                facingMode: {exact: "environment"}
+                //facingMode: "user"
             }
         })
     }
