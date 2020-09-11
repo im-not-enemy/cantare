@@ -1,21 +1,20 @@
 <template>
     <div>
-        <h2>Scan</h2>
         <video id="camera" v-bind:srcObject.prop="stream" playsinline autoplay muted width="100%"></video>
         <div id="bar">
             <ShutterButton v-on:released="showPreview"></ShutterButton>
         </div>
-        <Preview v-if="this.preview" v-bind:img="this.capture"></Preview>
+        <Cropper v-if="this.preview" v-bind:img="this.capture"></Cropper>
     </div>
 </template>
 
 <script>
 import ShutterButton from '../Parts/ShutterButton'
-import Preview from '../Modal/Preview'
+import Cropper from '../Modal/Cropper'
 
 export default {
     components: {
-        ShutterButton,Preview
+        ShutterButton,Cropper
     },
     data: function(){
         return {
@@ -51,8 +50,8 @@ export default {
         this.stream = await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
-                facingMode: {exact: "environment"}
-                //facingMode: "user"
+                //facingMode: {exact: "environment"}
+                facingMode: "user"
             }
         })
     }
@@ -71,5 +70,4 @@ export default {
     align-items: center;
     justify-content: center;
 }
-
 </style>
