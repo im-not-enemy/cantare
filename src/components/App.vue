@@ -1,11 +1,13 @@
 <template>
-    <div>
+    <div id="app">
         <div id="show-links" v-show="seen" v-touch:swipe.left="this.hide">
             <router-link to="/studio">studio</router-link><br> 
             <router-link to="/scan">scan</router-link><br>
             <router-link to="/menu">menu</router-link><br>
             <router-link to="/training">training</router-link><br> 
-            <router-link to="/analysis">analysis</router-link>
+            <router-link to="/analysis">analysis</router-link><br>
+            <button @click="this.enable" v-if="!(this.full)">full: enable</button>
+            <button @click="this.disable" v-if="this.full">full: disable</button>
         </div>
         <div id="hide-links" v-show="!seen" v-touch:swipe.right="this.show"></div>
         <router-view></router-view>
@@ -17,7 +19,8 @@
 export default {
     data: function(){
         return {
-            seen: true
+            seen: true,
+            full: false
         }
     },
     methods: {
@@ -26,7 +29,15 @@ export default {
         },
         show: function(){
             this.seen = true
-        }
+        },
+        enable(){
+            document.getElementById('app').requestFullscreen()
+            this.full = true
+        },
+        disable(){
+            document.exitFullscreen()
+            this.full = false
+        },
     }
 }
 </script>

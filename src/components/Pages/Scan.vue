@@ -50,8 +50,8 @@ export default {
         this.stream = await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
-                facingMode: {exact: "environment"}
-                //facingMode: "user"
+                //facingMode: {exact: "environment"}
+                facingMode: "user"
             }
         })
     }
