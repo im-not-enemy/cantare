@@ -6,17 +6,25 @@
             @change="this.change"
         ></cropper>
         <div id="bar">
-            <CropButton></CropButton>
+            <CropButton @crop="showPreview()"></CropButton>
         </div>
+        <Preview v-if="this.preview" :canvas="this.croppedCanvas"></Preview>
     </div>
 </template>
 
 <script>
     import {Cropper} from 'vue-advanced-cropper' 
     import CropButton from '../Parts/CropButton'
+    import Preview from '../Modal/Preview'
 
     export default {
         props: ["img"],
+        data(){
+            return {
+                preview: undefined,
+                croppedCanvas: undefined
+            }
+        },
         computed: {
             aspectRaito(){
                 const img = new Image()
@@ -28,14 +36,17 @@
         },
         methods: {
             change({coordinates,canvas}){
-                console.log(coordinates,canvas)
+                this.croppedCanvas = canvas
             },
             gcd(a,b){
                 if (b === 0) return a
                 return this.gcd(b,a%b)
+            },
+            showPreview(){
+                this.preview = true
             }
         },
-        components: {Cropper,CropButton}
+        components: {Cropper,CropButton,Preview}
     }
 </script>
 

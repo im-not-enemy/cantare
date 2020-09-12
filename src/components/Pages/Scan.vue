@@ -2,9 +2,9 @@
     <div>
         <video id="camera" v-bind:srcObject.prop="stream" playsinline autoplay muted width="100%"></video>
         <div id="bar">
-            <ShutterButton v-on:released="showPreview"></ShutterButton>
+            <ShutterButton v-on:released="showCropper"></ShutterButton>
         </div>
-        <Cropper v-if="this.preview" v-bind:img="this.capture"></Cropper>
+        <Cropper v-if="this.cropper" v-bind:img="this.capture"></Cropper>
     </div>
 </template>
 
@@ -19,13 +19,13 @@ export default {
     data: function(){
         return {
             stream: undefined,
-            preview: undefined,
+            cropper: undefined,
             capture: undefined
         }
     },
     methods: {
-        showPreview: function(){
-            this.preview = true
+        showCropper: function(){
+            this.cropper = true
             const camera = document.getElementById('camera')
             const canvas = document.createElement('canvas') //エレメント作成
 
@@ -50,8 +50,8 @@ export default {
         this.stream = await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
-                //facingMode: {exact: "environment"}
-                facingMode: "user"
+                facingMode: {exact: "environment"}
+                //facingMode: "user"
             }
         })
     }
