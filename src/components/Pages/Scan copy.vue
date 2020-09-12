@@ -1,20 +1,20 @@
 <template>
-    <div id="app">
-        <div id="content">
-            <video id="camera" v-bind:srcObject.prop="stream" playsinline autoplay muted width="100%"></video>
+    <div>
+        <video id="camera" v-bind:srcObject.prop="stream" playsinline autoplay muted width="100%"></video>
+        <div id="bar">
+            <ShutterButton v-on:released="showCropper"></ShutterButton>
         </div>
-        <ButtonBar :mode="'shutter'" @click="showCropper"></ButtonBar>
         <Cropper v-if="this.cropper" v-bind:img="this.capture"></Cropper>
     </div>
 </template>
 
 <script>
-import ButtonBar from '../Parts/ButtonBar'
+import ShutterButton from '../Parts/ShutterButton'
 import Cropper from '../Modal/Cropper'
 
 export default {
     components: {
-        ButtonBar,Cropper
+        ShutterButton,Cropper
     },
     data: function(){
         return {
@@ -59,14 +59,13 @@ export default {
 </script>
 
 <style scoped>
-#content {
+#bar {
     position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
+    bottom: 0px;
     width: 100%;
-    z-index: 50;
-    background: #DDFFFF;
+    height: 100px; /*要検討*/
+    background: #CCFFCC;
+    opacity: 0.5;
     display: flex;
     align-items: center;
     justify-content: center;

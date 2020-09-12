@@ -1,16 +1,16 @@
 <template>
     <div id="app">
-        <img :src="this.img">
-        <div id="bar">
-            <SubmitButton @submit="this.send"></SubmitButton>
+        <div id="content">
+            <img :src="this.img">
         </div>
+        <ButtonBar :mode="'submit'" @click="this.send"></ButtonBar>
         <Loading v-if="this.loading"></Loading>
         <Result v-if="this.result" :text="this.text"></Result>
     </div>
 </template>
 
 <script>
-    import SubmitButton from '../Parts/SubmitButton'
+    import ButtonBar from '../Parts/ButtonBar'
     import Loading from './Loading'
     import Result from './Result'
     import setting from '../../conf/setting'
@@ -66,12 +66,12 @@
                 })
             }
         },
-        components: {SubmitButton,Loading,Result}
+        components: {ButtonBar,Loading,Result}
     }
 </script>
 
 <style scoped>
-#app {
+#content {
     position: fixed;
     top: 0;
     left: 0;
@@ -79,17 +79,6 @@
     width: 100%;
     z-index: 50;
     background: #DDFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#bar {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-    height: 100px; /*要検討*/
-    background: #CCFFCC;
-    opacity: 0.5;
     display: flex;
     align-items: center;
     justify-content: center;

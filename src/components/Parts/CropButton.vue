@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button v-on:click="$emit('crop')">crop</button>
+        <button v-on:click="$emit('click')">crop</button>
     </div>
 </template>
 

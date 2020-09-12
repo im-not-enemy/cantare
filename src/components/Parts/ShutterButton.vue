@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button v-on:click="$emit('released')">release</button>
+        <button v-on:click="$emit('click')">release</button>
     </div>
 </template>
 

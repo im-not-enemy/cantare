@@ -1,7 +1,9 @@
 <template>
     <div id="app">
-        <div id="paper"></div><br>
-        <div>{{this.text}}</div>
+        <div id="content">
+            <div id="paper"></div><br>
+            <div>{{this.text}}</div>
+        </div>
     </div>
 </template>
 
@@ -17,7 +19,7 @@ export default {
 </script>
 
 <style scoped>
-#app {
+#content {
     position: fixed;
     top: 0;
     left: 0;
