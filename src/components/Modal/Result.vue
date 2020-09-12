@@ -1,0 +1,33 @@
+<template>
+    <div id="app">
+        <div id="paper"></div><br>
+        <div>{{this.text}}</div>
+    </div>
+</template>
+
+<script>
+import abcjs from 'abcjs'
+
+export default {
+    props: ['text'],
+    mounted(){
+        abcjs.renderAbc("paper", this.text)[0];
+    }
+}
+</script>
+
+<style scoped>
+#app {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 50;
+    background: #feddff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+</style>

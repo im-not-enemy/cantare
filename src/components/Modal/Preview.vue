@@ -1,17 +1,18 @@
 <template>
     <div id="app">
         <img :src="this.img">
-        {{this.result}}
         <div id="bar">
             <SubmitButton @submit="this.send"></SubmitButton>
         </div>
         <Loading v-if="this.loading"></Loading>
+        <Result v-if="this.result" :text="this.text"></Result>
     </div>
 </template>
 
 <script>
     import SubmitButton from '../Parts/SubmitButton'
     import Loading from './Loading'
+    import Result from './Result'
     import setting from '../../conf/setting'
     import moment from 'moment'
     import axios from 'axios'
@@ -22,7 +23,8 @@
         data(){
             return {
                 img: this.canvas.toDataURL("image/png"),
-                result: undefined,
+                result: false,
+                text: undefined,
                 loading: false
             }
         },
@@ -47,16 +49,24 @@
                     }
                 })
                 .then(res=>{
-                    this.result = res.data
+                    switch (res.data.status){
+                        case "SUCCEED":
+                            this.text = res.data.text
+                            break
+                        case "FAILED":
+                            alert(res.data.text)
+                            break
+                    }
+                    this.result = true
                     this.loading = false
                 })
                 .catch(err=>{
-                    this.result = err
+                    alert(err)
                     this.loading = false
                 })
             }
         },
-        components: {SubmitButton,Loading}
+        components: {SubmitButton,Loading,Result}
     }
 </script>
 
