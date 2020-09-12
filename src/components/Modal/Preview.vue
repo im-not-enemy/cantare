@@ -5,11 +5,13 @@
         <div id="bar">
             <SubmitButton @submit="this.send"></SubmitButton>
         </div>
+        <Loading v-if="this.loading"></Loading>
     </div>
 </template>
 
 <script>
     import SubmitButton from '../Parts/SubmitButton'
+    import Loading from './Loading'
     import setting from '../../conf/setting'
     import moment from 'moment'
     import axios from 'axios'
@@ -20,7 +22,8 @@
         data(){
             return {
                 img: this.canvas.toDataURL("image/png"),
-                result: undefined
+                result: undefined,
+                loading: false
             }
         },
         methods: {
@@ -37,6 +40,7 @@
                 const now = moment().format('YYYYMMDDHHmmss')
                 formdata.append('musicSheetImage',blob,`${now}.png`)
 
+                this.loading = true
                 axios.post(`${setting.server}/scan/upload`,formdata,{
                     headers:{
                         'content-type':'multipart/form-data'
@@ -44,13 +48,15 @@
                 })
                 .then(res=>{
                     this.result = res.data
+                    this.loading = false
                 })
                 .catch(err=>{
                     this.result = err
+                    this.loading = false
                 })
             }
         },
-        components: {SubmitButton}
+        components: {SubmitButton,Loading}
     }
 </script>
 
