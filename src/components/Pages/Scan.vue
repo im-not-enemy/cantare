@@ -40,6 +40,15 @@ export default {
             this.stopVideo()
             
         },
+        startVideo(){
+            navigator.mediaDevices.getUserMedia({
+                audio: false,
+                video: {
+                    facingMode: {exact: "environment"}
+                    //facingMode: "user"
+                }
+            }).then(stream => this.stream = stream)
+        },
         stopVideo: function(){
             const tracks = this.stream.getTracks()
             tracks.forEach(track => track.stop())
@@ -47,13 +56,7 @@ export default {
         }
     },
     created: async function(){
-        this.stream = await navigator.mediaDevices.getUserMedia({
-            audio: false,
-            video: {
-                //facingMode: {exact: "environment"}
-                facingMode: "user"
-            }
-        })
+        this.startVideo()
     }
 }
 </script>
