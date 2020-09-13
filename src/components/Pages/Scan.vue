@@ -48,10 +48,7 @@ export default {
             navigator.mediaDevices.getUserMedia({
                 audio: false,
                 video: {
-                    //facingMode: {exact: "environment"}
-                    //facingMode: "environment"
                     facingMode: this.activeCam
-                    //facingMode: "user"
                 }
             }).then(stream => this.stream = stream)
         },
@@ -94,7 +91,8 @@ export default {
     height: 100vh;
     width: 100%;
     z-index: 55;
-    background: rgba(45,45,45, 0.1);
+    background: rgba(255,255,255,0);
+    pointer-events: none;
 }
 #switchCam {
     position: absolute;
