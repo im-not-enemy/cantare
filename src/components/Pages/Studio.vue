@@ -3,7 +3,7 @@
         <div id="content">
 	        <div id="canvas"></div>
 	        <div id="midi"></div>
-	        <textarea id="abc" cols="80" rows="15" v-model="this.text"></textarea>
+	        <textarea id="abc" cols="80" rows="5" v-model="this.text"></textarea>
 	        <div id="warnings"></div>
         </div>
         <ButtonBar mode="submit" @click="submit"></ButtonBar>
@@ -19,7 +19,7 @@ import ButtonBar from '../Parts/ButtonBar'
 export default {
     data(){
         return {
-            text: 'T: Demo\nM: 4/4\nL: 1/4\nK: C\nC E G z | G E C z ||'
+            text: 'T: Demo\nM: 4/4\nL: 1/4\nK: C\nC E G z | G E C z | C C E E | G E C z ||'
         }
     },
     methods:{
@@ -36,7 +36,10 @@ export default {
 			abcjsParams: {
 				generateInline: true,
 				generateDownload: false
-			}
+			},
+            abcjsParams: {
+                staffwidth: document.getElementById('content').clientWidth //contentの幅いっぱいに表示
+            }
 		});
     },
     components: {ButtonBar}
