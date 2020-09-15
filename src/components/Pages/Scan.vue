@@ -58,6 +58,7 @@ export default {
             : this.activeCam = "environment"
             this.stopVideo()
             this.startVideo()
+            console.log("switched")
         },
         stopVideo: function(){
             const tracks = this.stream.getTracks()
@@ -92,7 +93,6 @@ export default {
     width: 100%;
     z-index: 55;
     background: rgba(255,255,255,0);
-    pointer-events: none;
 }
 #switchCam {
     position: absolute;
