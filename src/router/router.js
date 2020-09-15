@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import studio from '../components/Pages/Studio.vue'
 import scan from '../components/Pages/Scan.vue'
-import menu from '../components/Pages/Menu.vue'
+import menulist from '../components/Pages/MenuList.vue'
 import training from '../components/Pages/Training.vue'
 import analysis from '../components/Pages/Analysis.vue'
 
@@ -20,8 +20,8 @@ export default new Router({
             component: scan
         },
         {
-            path: '/menu',
-            component: menu
+            path: '/menulist',
+            component: menulist
         },
         {
             path: '/training',

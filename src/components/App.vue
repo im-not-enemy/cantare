@@ -3,7 +3,7 @@
         <div id="show-links" v-show="seen" v-touch:swipe.left="this.hide">
             <router-link to="/studio">studio</router-link><br> 
             <router-link to="/scan">scan</router-link><br>
-            <router-link to="/menu">menu</router-link><br>
+            <router-link to="/menulist">menulist</router-link><br>
             <router-link to="/training">training</router-link><br> 
             <router-link to="/analysis">analysis</router-link><br>
             <button @click="this.enable" v-if="!(this.full)">full: enable</button>
