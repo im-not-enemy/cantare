@@ -29,7 +29,6 @@ export default {
     mounted(){
 		new abcjs.Editor("abc", {
 			canvas_id: "canvas",
-			generate_midi: true,
 			abcjsParams: {
                 staffwidth: document.getElementById('content').clientWidth //contentの幅いっぱいに表示
             },
