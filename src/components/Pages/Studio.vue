@@ -3,10 +3,9 @@
         <div id="content">
 	        <div id="canvas"></div>
             <div id="synth"></div>
-            <button @click="play">play</button>
 	        <textarea id="abc" cols="80" rows="5" v-model="this.text"></textarea>
         </div>
-        <ButtonBar mode="submit" @click="submit"></ButtonBar>
+        <ButtonBar :mode="['play','submit']" @submit="submit" @play="play"></ButtonBar>
     </div>
 </template>
 
@@ -14,7 +13,7 @@
 import abcjs from 'abcjs'
 import axios from 'axios'
 import setting from '../../conf/setting'
-import ButtonBar from '../Parts/ButtonBar'
+import ButtonBar from '../Parts/MultiButtonBar'
 
 export default {
     data(){

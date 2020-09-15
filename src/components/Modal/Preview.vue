@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import ButtonBar from '../Parts/ButtonBar'
+    import ButtonBar from '../Parts/SingleButtonBar'
     import Loading from './Loading'
     import Result from './Result'
     import setting from '../../conf/setting'

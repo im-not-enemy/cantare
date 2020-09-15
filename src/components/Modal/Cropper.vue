@@ -14,7 +14,7 @@
 
 <script>
     import {Cropper} from 'vue-advanced-cropper' 
-    import ButtonBar from '../Parts/ButtonBar'
+    import ButtonBar from '../Parts/SingleButtonBar'
     import Preview from '../Modal/Preview'
 
     export default {

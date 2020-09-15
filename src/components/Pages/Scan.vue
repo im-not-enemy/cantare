@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import ButtonBar from '../Parts/ButtonBar'
+import ButtonBar from '../Parts/SingleButtonBar'
 import Cropper from '../Modal/Cropper'
 
 export default {
