@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style scoped>
-
+button {
+    pointer-events: auto;
+}
 </style>
