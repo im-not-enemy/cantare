@@ -3,6 +3,7 @@
         <div id="content">
             <div id="paper"></div><br>
             <div>{{this.text}}</div>
+            <div v-if="error">{{this.error}}</div>
         </div>
     </div>
 </template>
@@ -11,7 +12,7 @@
 import abcjs from 'abcjs'
 
 export default {
-    props: ['text'],
+    props: ['text','error'],
     mounted(){
         abcjs.renderAbc("paper", this.text)[0];
     }

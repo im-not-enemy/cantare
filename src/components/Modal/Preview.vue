@@ -5,7 +5,7 @@
         </div>
         <ButtonBar :mode="'submit'" @click="this.send"></ButtonBar>
         <Loading v-if="this.loading"></Loading>
-        <Result v-if="this.result" :text="this.text"></Result>
+        <Result v-if="this.result" :text="this.text" :error="this.error"></Result>
     </div>
 </template>
 
@@ -25,7 +25,8 @@
                 img: this.canvas.toDataURL("image/png"),
                 result: false,
                 text: undefined,
-                loading: false
+                loading: false,
+                error: undefined
             }
         },
         methods: {
@@ -54,14 +55,15 @@
                             this.text = res.data.text
                             break
                         case "FAILED":
-                            alert(res.data.text)
+                            this.error = res.data.text
                             break
                     }
                     this.result = true
                     this.loading = false
                 })
                 .catch(err=>{
-                    alert(err)
+                    this.error = err
+                    this.result = true
                     this.loading = false
                 })
             }
