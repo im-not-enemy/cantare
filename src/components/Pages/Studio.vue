@@ -2,8 +2,9 @@
     <div id="app">
         <div id="content">
 	        <div id="canvas"></div>
-	        <textarea id="abc" cols="80" rows="5" v-model="this.text"></textarea>
             <div id="synth"></div>
+            <button @click="play">play</button>
+	        <textarea id="abc" cols="80" rows="5" v-model="this.text"></textarea>
         </div>
         <ButtonBar mode="submit" @click="submit"></ButtonBar>
     </div>
@@ -18,27 +19,28 @@ import ButtonBar from '../Parts/ButtonBar'
 export default {
     data(){
         return {
-            text: 'T: Demo\nM: 4/4\nL: 1/4\nK: C\nC E G z | G E C z | C C E E | G E C z ||'
+            text: 'T: Demo\nM: 4/4\nL: 1/4\nK: C\nC E G z | G E C z | C C E E | G E C z ||',
+            editer: undefined
         }
     },
     methods:{
         submit(){
 		    axios.post(`${setting.server}/menu?`,{abc:this.text})
+        },
+        play(){
+            this.editer.synth.synthControl.play()
         }
     },
     mounted(){
-		new abcjs.Editor("abc", {
+		this.editer = new abcjs.Editor("abc", {
 			canvas_id: "canvas",
 			abcjsParams: {
                 staffwidth: document.getElementById('content').clientWidth //contentの幅いっぱいに表示
             },
-            synth: {
-                el: "#synth",
-                options: {
-                    displayPlay: true
-                }
+            synth: { 
+                el: "#synth"
             }
-		});
+        });
     },
     components: {ButtonBar}
 }
