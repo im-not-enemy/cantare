@@ -2,7 +2,6 @@
     <div id="card">
         <div id="paper"></div>
         <div :class="data._id"></div>
-        {{data}}
     </div>
 </template>
 
@@ -10,12 +9,17 @@
 import abcjs from 'abcjs'
 
 export default {
-    props: ["data"],
+    props: ["data","width"],
     mounted(){
         // そのまま #paperにレンダリングしてしまうと、上書きループするので
         // 一度 #paperにレンダリングされたSVGだけ取り出して個別に再レンダリング
-        console.log(document.getElementById('card').clientWidth)
-        abcjs.renderAbc("paper",this.data.abc)
+        abcjs.renderAbc("paper",this.data.abc,{
+            paddingleft: 0,
+            paddingright: 0,
+            paddingtop: 0,
+            paddingbottom: 0,
+            staffwidth: this.width - 5
+        })
         const paper = document.getElementById('paper')
         const svg = paper.getElementsByTagName('svg') //svg情報のみ取得
         const data = document.getElementsByClassName(this.data._id)[0]
@@ -28,7 +32,8 @@ export default {
 <style scoped>
 #card {
     border: solid 1px gray;
-    margin: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
     width: 100%;
     background: lightcyan;
 }
