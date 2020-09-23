@@ -3,7 +3,12 @@
         <div id="content">
 	        <div id="canvas"></div>
             <div id="synth"></div>
-	        <textarea id="abc" cols="80" rows="5" v-model="this.text"></textarea>
+            <textarea id="abc" cols="80" rows="5">
+T: Demo
+M: 4/4
+L: 1/4
+K: C
+C E G z | G E C z | C C E E | G E C z ||</textarea>
         </div>
         <ButtonBar :mode="['play','submit']" @submit="submit" @play="play"></ButtonBar>
     </div>
@@ -18,13 +23,13 @@ import ButtonBar from '../Parts/MultiButtonBar'
 export default {
     data(){
         return {
-            text: 'T: Demo\nM: 4/4\nL: 1/4\nK: C\nC E G z | G E C z | C C E E | G E C z ||',
             editer: undefined
         }
     },
     methods:{
         submit(){
-		    axios.post(`${setting.server}/menu?`,{abc:this.text})
+            const abc = document.getElementById('abc').value
+            axios.post(`${setting.server}/menu?`,{abc:abc})
         },
         play(){
             this.editer.synth.synthControl.play()
