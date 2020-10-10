@@ -1,3 +1,3 @@
 export default {
-    server: "https://192.168.0.9:4000/api/v1"
+    server: "https://cantare.imnotflog.work:4000/api/v1"
 }
