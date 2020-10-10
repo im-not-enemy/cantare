@@ -5,8 +5,6 @@
             <div id="paper"></div>
             <button @click="request">request</button>
             <button @click="play">play</button>
-            <button @click="submit('succeed')">succeed</button>
-            <button @click="submit('failed')">failed</button>
         </div>
         <div v-if="err">
             {{err}}
