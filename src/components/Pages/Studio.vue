@@ -3,10 +3,11 @@
         <div id="content">
 	        <div id="canvas"></div>
             <div id="synth"></div>
-            <textarea id="abc" cols="80" rows="5">
+            <textarea id="abc" cols="80" rows="6">
 T: Demo
 M: 4/4
 L: 1/4
+Q: "Allegro"
 K: C
 C E G z | G E C z | C C E E | G E C z ||</textarea>
         </div>
