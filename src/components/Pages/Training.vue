@@ -6,6 +6,14 @@
             <button @click="request">request</button>
             <button @click="play">play</button>
             <div id="midi"></div>
+            <select v-model="instrument">
+                <option value="1" default>Piano</option>
+                <option value="10" default>Glocken</option>
+                <option value="20" default>Organ</option>
+                <option value="25">Guiter</option>
+                <option value="41">Violin</option>
+                <option value="53">Voice</option>
+            </select>
         </div>
         <div v-if="err">
             {{err}}
@@ -25,7 +33,8 @@ export default {
             abc: undefined,
             _id: undefined,
             err: undefined,
-            visualObj: undefined
+            visualObj: undefined,
+            instrument: 1
         }
     },
     methods: {
@@ -46,7 +55,7 @@ export default {
             const synthControl = new abcjs.synth.SynthController()
             synthControl.load('#midi',cursorControl,visualOptions)
             const audioParams = {
-                program: 0 //instrument
+                program: this.instrument //number
             }
             await synthControl.setTune(this.visualObj[0],false,audioParams)
             await synthControl.play()
