@@ -5,6 +5,7 @@
             <div id="paper"></div>
             <button @click="request">request</button>
             <button @click="play">play</button>
+            <div id="midi"></div>
         </div>
         <div v-if="err">
             {{err}}
@@ -40,13 +41,15 @@ export default {
         },
         async play(){
             const ctx = new AudioContext()
-            const synth = new abcjs.synth.CreateSynth()
-            await synth.init({
-                audioContext: ctx,
-                visualObj: this.visualObj[0]
-            })
-            await synth.prime()
-            await synth.start()
+            const cursorControl = {}
+            const visualOptions = {}
+            const synthControl = new abcjs.synth.SynthController()
+            synthControl.load('#midi',cursorControl,visualOptions)
+            const audioParams = {
+                program: 0 //instrument
+            }
+            await synthControl.setTune(this.visualObj[0],false,audioParams)
+            await synthControl.play()
         },
         submit(result){
             axios.put(`${setting.server}/menu/${this._id}/result`,{
