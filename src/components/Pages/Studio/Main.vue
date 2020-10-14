@@ -10,16 +10,16 @@ L: 1/4
 Q: "Allegro"
 K: C
 C E G z | G E C z | C C E E | G E C z ||</textarea>
+            <button @click="submit">submit</button>
+            <button @click="play">play</button>
         </div>
-        <ButtonBar :mode="['play','submit']" @submit="submit" @play="play"></ButtonBar>
     </div>
 </template>
 
 <script>
 import abcjs from 'abcjs'
 import axios from 'axios'
-import setting from '../../conf/setting'
-import ButtonBar from '../Parts/MultiButtonBar'
+import setting from '../../../conf/setting'
 
 export default {
     data(){
@@ -46,8 +46,7 @@ export default {
                 el: "#synth"
             }
         });
-    },
-    components: {ButtonBar}
+    }
 }
 </script>
 

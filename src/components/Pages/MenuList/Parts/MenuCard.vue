@@ -9,7 +9,7 @@
 <script>
 import abcjs from 'abcjs'
 import axios from 'axios'
-import setting from '../../conf/setting'
+import setting from '../../../../conf/setting'
 
 export default {
     props: ["data","width"],

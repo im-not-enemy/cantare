@@ -23,7 +23,7 @@
 
 <script>
 import axios from 'axios'
-import setting from '../../conf/setting'
+import setting from '../../../conf/setting'
 import moment from 'moment'
 import abcjs from 'abcjs'
 

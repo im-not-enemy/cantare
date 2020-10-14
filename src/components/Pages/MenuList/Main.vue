@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import setting from '../../conf/setting'
+import setting from '../../../conf/setting'
 import axios from 'axios'
-import MenuCard from '../Parts/MenuCard'
+import MenuCard from './Parts/MenuCard'
 
 export default {
     data(){
