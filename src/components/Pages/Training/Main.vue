@@ -1,7 +1,6 @@
 <template>
     <div id="app">
         <div id="content" v-if="!(err)">
-            <h2>Trainning</h2>
             <div id="paper"></div>
             <button @click="request">request</button>
             <button @click="play">play</button>

@@ -1,7 +1,6 @@
 <template>
     <div id="app">
         <div id="content" v-if="!(err)">
-            <h2>Menu list</h2>
             <div v-for="item in items" :key="item._id">
                 <MenuCard :data="item" :width="width"></MenuCard>
             </div>
