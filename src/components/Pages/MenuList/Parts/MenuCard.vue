@@ -1,5 +1,5 @@
 <template>
-    <div id="card">
+    <div id="card" v-if="show">
         <div id="paper"></div>
         <div :class="data._id"></div>
         <button class="delete" @click="remove">X</button>
@@ -13,6 +13,11 @@ import setting from '../../../../conf/setting'
 
 export default {
     props: ["data","width"],
+    data(){
+        return {
+            show: true
+        }
+    },
     mounted(){
         // そのまま #paperにレンダリングしてしまうと、上書きループするので
         // 一度 #paperにレンダリングされたSVGだけ取り出して個別に再レンダリング
@@ -32,6 +37,14 @@ export default {
     methods: {
         remove(){
             axios.delete(`${setting.server}/menu/${this.data._id}`)
+            .then(res => {
+                if (res.status === 200){
+                    this.show = false
+                }
+                else {
+                    console.log(res)
+                }
+            })
         }
     }
 }
