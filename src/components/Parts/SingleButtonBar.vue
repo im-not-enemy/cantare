@@ -1,19 +1,15 @@
 <template>
     <div id="app">
-        <CropButton v-if="this.mode==='crop'" @click="$emit('click')"></CropButton>
-        <ShutterButton v-if="this.mode==='shutter'" @click="$emit('click')"></ShutterButton>
         <SubmitButton v-if="this.mode==='submit'" @click="$emit('click')"></SubmitButton>
     </div>
 </template>
 
 <script>
-import CropButton from './CropButton'
-import ShutterButton from './ShutterButton'
 import SubmitButton from './SubmitButton'
 
 export default {
     props: ["mode"],
-    components: {CropButton,ShutterButton,SubmitButton}
+    components: {SubmitButton}
 }
 </script>
 
