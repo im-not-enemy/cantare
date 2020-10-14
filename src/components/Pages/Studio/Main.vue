@@ -3,15 +3,11 @@
         <div id="content">
 	        <div id="canvas"></div>
             <div id="synth"></div>
-            <textarea id="abc" cols="80" rows="6">
-T: Demo
-M: 4/4
-L: 1/4
-Q: "Allegro"
-K: C
-C E G z | G E C z | C C E E | G E C z ||</textarea>
-            <button @click="submit">submit</button>
-            <button @click="play">play</button>
+            <textarea id="abc" cols="80" rows="6"></textarea>
+        </div>
+        <div id="commandBar">
+            <Submit></Submit>
+            <button class="play" @click="play">play</button>
         </div>
     </div>
 </template>
@@ -20,6 +16,7 @@ C E G z | G E C z | C C E E | G E C z ||</textarea>
 import abcjs from 'abcjs'
 import axios from 'axios'
 import setting from '../../../conf/setting'
+import Submit from './Buttons/Submit'
 
 export default {
     data(){
@@ -28,25 +25,23 @@ export default {
         }
     },
     methods:{
-        submit(){
-            const abc = document.getElementById('abc').value
-            axios.post(`${setting.server}/menu?`,{abc:abc})
-        },
         play(){
             this.editer.synth.synthControl.play()
         }
     },
     mounted(){
+        document.getElementById('abc').value = `T: Demo\nM: 4/4\nL: 1/4\nQ: "Allegro"\nK: C\nC E G z | G E C z | C C E E | G E C z ||`
 		this.editer = new abcjs.Editor("abc", {
 			canvas_id: "canvas",
 			abcjsParams: {
-                staffwidth: document.getElementById('content').clientWidth //contentの幅いっぱいに表示
+                staffwidth: content.clientWidth //contentの幅いっぱいに表示
             },
             synth: { 
                 el: "#synth"
             }
         });
-    }
+    },
+    components: {Submit}
 }
 </script>
 
@@ -66,5 +61,22 @@ textarea {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+#commandBar {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 51;
+    background: yellow;
+    opacity: 0.5;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.submit {
+    margin: 20px 10px
+}
+.play {
+    margin: 20px 10px
 }
 </style>
