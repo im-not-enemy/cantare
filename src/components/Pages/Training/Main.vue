@@ -52,8 +52,9 @@ export default {
         },
         clickListener(abcelem,tuneNumber,classes,analysis,drag){
             const clickedElement = document.getElementById("paper").querySelector(".abcjs-note_selected")
-            const abcString = pitchToAbc(abcelem.pitches[0])
-            this.clicked.push(abcString)
+            const abcPitch = pitchToAbc(abcelem.pitches[0])
+            const abcString = `M: 4/4\nL: 1/4\nQ: "Allegro"\nK: C\n${abcPitch}4`
+            this.clicked.push(abcPitch)
             const visualObj = abcjs.renderAbc("*",abcString) //sound only
             this.play(visualObj[0])
         },
