@@ -2,8 +2,6 @@
     <div id="app">
         <div id="content" v-if="!(err)">
             <div id="paper"></div>
-            <button @click="request">request</button>
-            <button @click="play">play</button>
             <div id="midi"></div>
             <select v-model="instrument">
                 <option value="1" default>Piano</option>
@@ -13,6 +11,8 @@
                 <option value="41">Violin</option>
                 <option value="53">Voice</option>
             </select>
+            <button @click="play">play</button>
+            <button @click="request">request</button>
         </div>
         <div v-if="err">
             {{err}}
