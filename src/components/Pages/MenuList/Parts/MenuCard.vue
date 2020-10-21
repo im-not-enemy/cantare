@@ -60,7 +60,6 @@ export default {
         },
         turn(){
             this.state = this.state === "front" ? "back" : "front"
-            console.log(this.data.abc)
         }
     }
 }
