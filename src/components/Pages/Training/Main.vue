@@ -11,7 +11,7 @@
                 <option value="41">Violin</option>
                 <option value="53">Voice</option>
             </select>
-            <button @click="play(visualObj[0])">play</button>
+            <button @click="playAll()">play</button>
             <button @click="request">request</button>
             <div>{{clicked}}</div>
         </div>
@@ -56,19 +56,46 @@ export default {
             const abcString = `M: 4/4\nL: 1/4\nQ: "Allegro"\nK: C\n${abcPitch}4`
             this.clicked.push(abcPitch)
             const visualObj = abcjs.renderAbc("*",abcString) //sound only
-            this.play(visualObj[0])
+            this.playSound(visualObj[0],this.instrument)
         },
-        async play(visualObj){
+        playSound(visualObj,instrumentNumber){
             const ctx = new AudioContext()
             const cursorControl = {}
             const visualOptions = {}
             const synthControl = new abcjs.synth.SynthController()
             synthControl.load('#midi',cursorControl,visualOptions)
             const audioParams = {
-                program: this.instrument //number
+                program: instrumentNumber //number
             }
-            await synthControl.setTune(visualObj,false,audioParams)
-            await synthControl.play()
+            synthControl.setTune(visualObj,false,audioParams)
+            synthControl.play()
+        },
+        async playBeat(){
+            let meter,qpm,key
+            this.abc.split('\n').forEach(directive => {
+                if (/^M:/.test(directive)) meter = directive
+                else if (/^Q:/.test(directive)) qpm = directive
+                else if (/^K:/.test(directive)) key = directive
+            });
+
+            const length = `L: 1/${this.visualObj[0].getMeterFraction().den}`
+
+            const notesCountPerMeasure = this.visualObj[0].getMeterFraction().num
+            let notes = "D"
+            for (let i=1;i<notesCountPerMeasure;i++) notes = notes + "D"
+
+            const abcString = `${meter}\n${length}\n${qpm}\n${key}\n${notes}`
+            const visualObj = abcjs.renderAbc("*",abcString) //sound only
+
+            this.playSound(visualObj[0],128)
+            return visualObj[0].millisecondsPerMeasure()
+        },
+        async playAll(){
+            const millisecondsPerMeasure = await this.playBeat()
+            const timeout = millisecondsPerMeasure
+            setTimeout(() => {
+                this.playSound(this.visualObj[0],this.instrument)
+            }, timeout);
         },
         submit(result){
             axios.put(`${setting.server}/menu/${this._id}/result`,{
