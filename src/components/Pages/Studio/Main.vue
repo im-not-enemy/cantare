@@ -51,7 +51,7 @@ textarea {
 }
 #content {
     position: fixed;
-    top: 0;
+    top: 30px;
     left: 0;
     height: 100vh;
     width: 100%;
