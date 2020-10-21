@@ -2,7 +2,6 @@
     <div id="app">
         <div id="content" v-if="!(err)">
             <div id="paper"></div>
-            <div id="midi"></div>
             <select v-model="instrument">
                 <option value="1" default>Piano</option>
                 <option value="10" default>Glocken</option>
@@ -65,9 +64,6 @@ export default {
         },
         playSound(visualObj,instrumentNumber){
             const ctx = new AudioContext()
-            const cursorControl = {}
-            const visualOptions = {}
-            this.synthControl.load('#midi',cursorControl,visualOptions)
             const audioParams = {
                 program: instrumentNumber //number
             }
