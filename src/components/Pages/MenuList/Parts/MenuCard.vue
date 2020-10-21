@@ -1,7 +1,7 @@
 <template>
     <div id="card" v-if="show">
         <div v-show="state === 'front'">
-            <div id="paper"></div>
+            <div :id="_uid"></div>
             <div :class="data._id"></div>
         </div>
         <div v-show="state === 'back'">
@@ -31,20 +31,14 @@ export default {
         }
     },
     mounted(){
-        // そのまま #paperにレンダリングしてしまうと、上書きループするので
-        // 一度 #paperにレンダリングされたSVGだけ取り出して個別に再レンダリング
-        abcjs.renderAbc("paper",this.data.abc,{
+        abcjs.renderAbc(String(this._uid),this.data.abc,{
             paddingleft: 0,
             paddingright: 0,
             paddingtop: 0,
             paddingbottom: 0,
-            staffwidth: this.width - 5
+            staffwidth: this.width - 5,
+            responsive: "resize"
         })
-        const paper = document.getElementById('paper')
-        const svg = paper.getElementsByTagName('svg') //svg情報のみ取得
-        const data = document.getElementsByClassName(this.data._id)[0]
-        data.appendChild(svg[0]) //再レンダリング
-        paper.remove() //#paperは削除
     },
     methods: {
         remove(){
