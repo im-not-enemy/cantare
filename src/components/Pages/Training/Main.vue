@@ -128,11 +128,12 @@ export default {
 #content {
     position: fixed;
     top: 30px;
+    padding-top: 10px;
     left: 0;
     height: 100vh;
     width: 100%;
     z-index: 50;
-    background: lightyellow;
+    background: whitesmoke;
     display: flex;
     flex-direction: column;
 }

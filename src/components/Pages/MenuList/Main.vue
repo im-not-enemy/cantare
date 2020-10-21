@@ -40,6 +40,7 @@ export default {
 #content {
     position: absolute;
     top: 30px;
+    padding-top: 6px;
     left: 0;
     width: 100%;
     z-index: 50;
