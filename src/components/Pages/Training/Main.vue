@@ -120,7 +120,8 @@ export default {
                 paddingbottom: 0,
                 staffwidth: document.getElementById('app').clientWidth,
                 add_classes: true,
-                clickListener: this.clickListener
+                clickListener: this.clickListener,
+                responsive: "resize"
             })
         }
     }

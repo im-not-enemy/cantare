@@ -34,7 +34,8 @@ export default {
 		this.editer = new abcjs.Editor("abc", {
 			canvas_id: "canvas",
 			abcjsParams: {
-                staffwidth: content.clientWidth //contentの幅いっぱいに表示
+                staffwidth: content.clientWidth, //contentの幅いっぱいに表示
+                responsive: "resize"
             },
             synth: { 
                 el: "#synth"
