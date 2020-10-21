@@ -43,7 +43,7 @@ export default {
     left: 0;
     width: 100%;
     z-index: 50;
-    background: lightskyblue;
+    background: gray;
     display: flex;
     flex-direction: column;
 }

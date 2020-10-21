@@ -62,17 +62,17 @@ export default {
 <style scoped>
 #card {
     position: relative;
-    border: solid 1px gray;
     margin-top: 1px;
     margin-bottom: 1px;
     width: 100%;
-    background: lightcyan;
+    background: whitesmoke;
 }
 .buttons {
     position: absolute;
     top: 0;
     right: 0;
-    background: lightseagreen;
+    background: white;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
     padding: 5px;
 }
 p {
