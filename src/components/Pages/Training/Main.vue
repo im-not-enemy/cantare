@@ -37,7 +37,7 @@ export default {
             visualObj: undefined,
             instrument: 1,
             clicked: [],
-            synthControl: new abcjs.synth.SynthController()
+            synthControl: undefined
         }
     },
     methods: {
@@ -67,8 +67,10 @@ export default {
             const audioParams = {
                 program: instrumentNumber //number
             }
-            this.synthControl.setTune(visualObj,false,audioParams)
-            this.synthControl.play()
+            const synthControl = new abcjs.synth.SynthController()
+            synthControl.setTune(visualObj,false,audioParams)
+            synthControl.play()
+            return synthControl
         },
         async playBeat(){
             let meter,qpm,key
@@ -87,14 +89,14 @@ export default {
             const abcString = `${meter}\n${length}\n${qpm}\n${key}\n${notes}`
             const visualObj = abcjs.renderAbc("*",abcString) //sound only
 
-            this.playSound(visualObj[0],128)
+            this.synthControl = this.playSound(visualObj[0],128)
             return visualObj[0].millisecondsPerMeasure()
         },
         async playAll(){
             const millisecondsPerMeasure = await this.playBeat()
             const timeout = millisecondsPerMeasure
             setTimeout(() => {
-                this.playSound(this.visualObj[0],this.instrument)
+                this.synthControl = this.playSound(this.visualObj[0],this.instrument)
             }, timeout);
         },
         submit(result){
