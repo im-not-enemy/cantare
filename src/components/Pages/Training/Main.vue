@@ -12,6 +12,7 @@
                 <option value="53">Voice</option>
             </select>
             <button @click="playAll()">play</button>
+            <button @click="stop()">stop</button>
             <button @click="request">request</button>
             <div>{{clicked}}</div>
         </div>
@@ -36,7 +37,8 @@ export default {
             err: undefined,
             visualObj: undefined,
             instrument: 1,
-            clicked: []
+            clicked: [],
+            synthControl: new abcjs.synth.SynthController()
         }
     },
     methods: {
@@ -58,17 +60,19 @@ export default {
             const visualObj = abcjs.renderAbc("*",abcString) //sound only
             this.playSound(visualObj[0],this.instrument)
         },
+        stop(){
+            this.synthControl.pause()
+        },
         playSound(visualObj,instrumentNumber){
             const ctx = new AudioContext()
             const cursorControl = {}
             const visualOptions = {}
-            const synthControl = new abcjs.synth.SynthController()
-            synthControl.load('#midi',cursorControl,visualOptions)
+            this.synthControl.load('#midi',cursorControl,visualOptions)
             const audioParams = {
                 program: instrumentNumber //number
             }
-            synthControl.setTune(visualObj,false,audioParams)
-            synthControl.play()
+            this.synthControl.setTune(visualObj,false,audioParams)
+            this.synthControl.play()
         },
         async playBeat(){
             let meter,qpm,key
