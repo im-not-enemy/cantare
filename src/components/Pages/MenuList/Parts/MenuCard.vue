@@ -1,8 +1,19 @@
 <template>
     <div id="card" v-if="show">
-        <div id="paper"></div>
-        <div :class="data._id"></div>
-        <button class="delete" @click="remove">X</button>
+        <div v-show="state === 'front'">
+            <div id="paper"></div>
+            <div :class="data._id"></div>
+        </div>
+        <div v-show="state === 'back'">
+            <p>{{data.abc}}</p>
+        </div>
+
+        <!-- 固定表示 -->
+        <div class="buttons">
+            <button class="delete" @click="remove">X</button>
+            <button class="turn" @click="turn">@</button>
+        </div>
+        <!-------------->
     </div>
 </template>
 
@@ -15,7 +26,8 @@ export default {
     props: ["data","width"],
     data(){
         return {
-            show: true
+            show: true,
+            state: "front" // or "back"
         }
     },
     mounted(){
@@ -45,6 +57,10 @@ export default {
                     console.log(res)
                 }
             })
+        },
+        turn(){
+            this.state = this.state === "front" ? "back" : "front"
+            console.log(this.data.abc)
         }
     }
 }
@@ -59,9 +75,14 @@ export default {
     width: 100%;
     background: lightcyan;
 }
-.delete {
+.buttons {
     position: absolute;
     top: 0;
     right: 0;
+    background: lightseagreen;
+    padding: 5px;
+}
+p {
+    white-space: pre-wrap;
 }
 </style>
