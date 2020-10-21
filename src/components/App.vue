@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="header">
-            <button @click="this.show">@</button>
+            <button @click="this.show">三</button>
         </div>
         <div id="show-links" v-show="seen" v-touch:swipe.left="this.hide">
             <router-link to="/studio">studio</router-link><br> 
@@ -43,6 +43,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+}
 #show-links {
     background: white;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
@@ -66,14 +69,16 @@ router-view {
     z-index: 0;
 }
 .header {
+    background: white;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
     position: fixed;
     top: 0;
     left: 0;
     height: 30px;
     width: 100%;
     margin: 0px;
-    padding: 0px;
-    background: gray;
+    padding: 3px;
     z-index: 100;
+    display: flex;
 }
 </style>
