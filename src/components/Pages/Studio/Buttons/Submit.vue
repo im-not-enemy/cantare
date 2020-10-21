@@ -52,7 +52,6 @@ export default {
 <style scoped>
 .submitButton {
     position: relative;
-    background: orange;
     display: flex;
     align-items: center;
 }

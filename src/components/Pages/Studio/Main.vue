@@ -57,7 +57,7 @@ textarea {
     height: 100vh;
     width: 100%;
     z-index: 50;
-    background: lightyellow;
+    background: whitesmoke;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,10 +66,11 @@ textarea {
 #commandBar {
     position: fixed;
     bottom: 0px;
+    left: 0px;
     width: 100%;
     z-index: 51;
-    background: yellow;
-    opacity: 0.5;
+    background: white;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
     display: flex;
     flex-direction: row;
     justify-content: center;
