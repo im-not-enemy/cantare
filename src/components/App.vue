@@ -44,14 +44,18 @@ export default {
 
 <style scoped>
 #show-links {
-    background: gray;
+    background: white;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    width: 100px; /* 要検討 */
-    opacity: 0.5; /* 要検討 */
+    width: 200px;
     z-index: 150;
+    padding: 5px;
+}
+#show-links * {
+    margin: 5px;
 }
 router-view {
     position: fixed;
