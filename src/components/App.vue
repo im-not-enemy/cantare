@@ -3,13 +3,15 @@
         <div class="header">
             <button @click="show=!show">三</button>
         </div>
-        <div id="show-links" v-show="show" v-touch:swipe.left="hide">
-            <router-link to="/studio">studio</router-link><br> 
-            <router-link to="/menulist">menulist</router-link><br>
-            <router-link to="/training">training</router-link><br> 
-            <button @click="enable" v-if="!(full)">full: enable</button>
-            <button @click="disable" v-if="full">full: disable</button>
-        </div>
+        <transition>
+            <div id="show-links" v-show="show" v-touch:swipe.left="hide">
+                <router-link to="/studio">studio</router-link><br> 
+                <router-link to="/menulist">menulist</router-link><br>
+                <router-link to="/training">training</router-link><br> 
+                <button @click="enable" v-if="!(full)">full: enable</button>
+                <button @click="disable" v-if="full">full: disable</button>
+            </div>
+        </transition>
         <router-view></router-view>
     </div>
 </template>
@@ -40,6 +42,13 @@ export default {
 </script>
 
 <style scoped>
+.v-enter-active, .v-leave-active {
+    transition-duration: 0.3s;
+}
+.v-enter, .v-leave-to {
+    transform: translateX(-200px);
+    opacity: 0;
+}
 * {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
 }
