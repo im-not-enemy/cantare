@@ -4,7 +4,7 @@
             <button @click="show=!show">三</button>
         </div>
         <transition>
-            <div id="show-links" v-show="show" v-touch:swipe.left="hide">
+            <div class="side-bar" v-show="show" v-touch:swipe.left="hide">
                 <router-link to="/studio">studio</router-link><br> 
                 <router-link to="/menulist">menulist</router-link><br>
                 <router-link to="/training">training</router-link><br> 
@@ -52,7 +52,7 @@ export default {
 * {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
 }
-#show-links {
+.side-bar {
     background: white;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
     position: fixed;
@@ -63,7 +63,7 @@ export default {
     width: 200px;
     z-index: 100;
 }
-#show-links * {
+.side-bar * {
     margin: 5px;
 }
 router-view {
