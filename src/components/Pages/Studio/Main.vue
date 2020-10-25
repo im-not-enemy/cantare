@@ -52,6 +52,7 @@ export default {
 textarea {
     width: 95%;
     font-size: 16px;
+    color:#444444;
 }
 #content {
     position: fixed;
