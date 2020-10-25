@@ -10,7 +10,7 @@
                 <option value="41">Violin</option>
                 <option value="53">Voice</option>
             </select>
-            <button @click="play()">play</button>
+            <button @click="playSong()">play</button>
             <button @click="stop()">stop</button>
             <button @click="request()">request</button>
             <div>{{clicked}}</div>
@@ -57,12 +57,21 @@ export default {
             const abcString = `M: 4/4\nL: 1/4\nQ: "Allegro"\nK: C\n${abcPitch}4`
             this.clicked.push(abcPitch)
             const visualObj = abcjs.renderAbc("*",abcString) //sound only
-            this.playSound(visualObj[0],this.instrument)
+            this.playNote(visualObj)
         },
         stop(){
             this.synthControl.pause()
         },
-        play(){
+        playNote(visualObj){
+            const ctx = new AudioContext()
+            const audioParams = {
+                program: this.instrument //number
+            }
+            const synthControl = new abcjs.synth.SynthController()
+            synthControl.setTune(visualObj[0],false,audioParams)
+            synthControl.play()
+        },
+        playSong(){
             const ctx = new AudioContext()
             const drumBeats = {
                 "2/4": "dd 76 77 60 30",
@@ -84,7 +93,7 @@ export default {
             const synthControl = new abcjs.synth.SynthController()
             synthControl.setTune(this.visualObj[0],false,audioParams)
             synthControl.play()
-            return synthControl
+            this.synthControl = synthControl
         },
         submit(result){
             axios.put(`${setting.server}/menu/${this._id}/result`,{
