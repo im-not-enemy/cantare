@@ -10,9 +10,17 @@
                 <option value="41">Violin</option>
                 <option value="53">Voice</option>
             </select>
-            <button @click="playSong()">play</button>
-            <button @click="stop()">stop</button>
-            <button @click="request()">request</button>
+            <div class="buttons">
+                <button @click="playSong()">
+                    <font-awesome-icon icon="play"/>
+                </button>
+                <button @click="stop()">
+                    <font-awesome-icon icon="stop"/>
+                </button>
+                <button @click="request()">
+                    <font-awesome-icon icon="step-forward"/>
+                </button>
+            </div>
             <div>{{clicked}}</div>
         </div>
         <div v-if="err">
@@ -134,8 +142,20 @@ export default {
     background: whitesmoke;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 #content * {
     font-size: 16px;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+button {
+    margin: 5px;
+}
+select {
+    width: 120px;
+    margin: 10px;
 }
 </style>

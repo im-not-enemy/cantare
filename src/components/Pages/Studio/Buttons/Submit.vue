@@ -1,7 +1,7 @@
 <template>
     <div class="submitButton">
         <button @click="submit">
-            {{label}}
+            <font-awesome-icon icon="save"/>
         </button>
         <div class="popup" v-if="popup">
             <span @click="popup=false">{{result}}</span>
@@ -17,7 +17,6 @@ import moment from 'moment'
 export default {
     data(){
         return {
-            label: "submit",
             result: "",
             popup: false
         }
@@ -54,6 +53,9 @@ export default {
     position: relative;
     display: flex;
     align-items: center;
+}
+button {
+    font-size: 16px;
 }
 .popup {
     position: absolute;

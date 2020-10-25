@@ -6,8 +6,10 @@
             <textarea id="abc" cols="80" rows="6"></textarea>
         </div>
         <div id="commandBar">
+            <button class="play" @click="play">
+                <font-awesome-icon icon="play"/>
+            </button>
             <Submit></Submit>
-            <button class="play" @click="play">play</button>
         </div>
     </div>
 </template>
@@ -77,10 +79,8 @@ textarea {
     flex-direction: row;
     justify-content: center;
 }
-.submit {
-    margin: 20px 10px
-}
 .play {
-    margin: 20px 10px
+    margin: 20px 10px;
+    font-size: 16px;
 }
 </style>

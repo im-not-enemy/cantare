@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         <div class="header">
-            <button @click="show=!show">三</button>
+            <button @click="show=!show">
+                <font-awesome-icon icon="bars"/>
+            </button>
         </div>
         <transition>
             <div class="side-bar" v-show="show" v-touch:swipe.left="hide">
@@ -86,5 +88,8 @@ router-view {
     padding: 3px;
     z-index: 150;
     display: flex;
+}
+.header > button {
+    font-size: 16px;
 }
 </style>
