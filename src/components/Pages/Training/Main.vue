@@ -135,4 +135,7 @@ export default {
     display: flex;
     flex-direction: column;
 }
+#content * {
+    font-size: 16px;
+}
 </style>
