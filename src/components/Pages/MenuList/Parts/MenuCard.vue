@@ -1,19 +1,21 @@
 <template>
-    <div id="card" v-if="show">
-        <div v-show="state === 'front'">
-            <div :id="_uid"></div>
-            <div :class="data._id"></div>
+    <div class="content" v-if="show">
+        <div id="card" @click="turn"
+         v-touch:swipe.left="slidLeft"
+         v-touch:swipe.right="slidRight"
+         :class="{slidLeft: slid, slidRight: !slid}"
+        >
+            <div v-show="state === 'front'">
+                <div :id="_uid"></div>
+                <div :class="data._id"></div>
+            </div>
+            <div v-show="state === 'back'">
+                <p>{{data.abc}}</p>
+            </div>
         </div>
-        <div v-show="state === 'back'">
-            <p>{{data.abc}}</p>
+        <div class="delete" @click="remove">
+            削除
         </div>
-
-        <!-- 固定表示 -->
-        <div class="buttons">
-            <button class="delete" @click="remove">X</button>
-            <button class="turn" @click="turn">@</button>
-        </div>
-        <!-------------->
     </div>
 </template>
 
@@ -27,6 +29,7 @@ export default {
     data(){
         return {
             show: true,
+            slid: false,
             state: "front" // or "back"
         }
     },
@@ -51,17 +54,28 @@ export default {
                     console.log(res)
                 }
             })
+            console.log("------------")
         },
         turn(){
             this.state = this.state === "front" ? "back" : "front"
+        },
+        slidLeft(){
+            this.slid = true
+        },
+        slidRight(){
+            this.slid = false
         }
     }
 }
 </script>
 
 <style scoped>
+.content {
+    position: relative;
+}
 #card {
     position: relative;
+    z-index: 2;
     margin-top: 1px;
     margin-bottom: 1px;
     width: 100%;
@@ -75,7 +89,28 @@ export default {
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
     padding: 5px;
 }
+.delete {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 75px;
+    background: red;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 p {
     white-space: pre-wrap;
+}
+.slidLeft {
+    transform: translateX(-75px);
+    transition-duration: 0.5s;
+}
+.slidRight {
+    transition-duration: 0.5s;
 }
 </style>
