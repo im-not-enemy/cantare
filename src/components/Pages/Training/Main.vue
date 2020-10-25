@@ -10,9 +10,9 @@
                 <option value="41">Violin</option>
                 <option value="53">Voice</option>
             </select>
-            <button @click="playAll()">play</button>
+            <button @click="play()">play</button>
             <button @click="stop()">stop</button>
-            <button @click="request">request</button>
+            <button @click="request()">request</button>
             <div>{{clicked}}</div>
         </div>
         <div v-if="err">
@@ -62,42 +62,29 @@ export default {
         stop(){
             this.synthControl.pause()
         },
-        playSound(visualObj,instrumentNumber){
+        play(){
             const ctx = new AudioContext()
+            const drumBeats = {
+                "2/4": "dd 76 77 60 30",
+                "3/4": "ddd 76 77 77 60 30 30",
+                "4/4": "dddd 76 77 77 77 60 30 30 30",
+                //"5/4": "ddddd 76 77 77 76 77 60 30 30 60 30",
+                //"6/8": "dd 76 77 60 30",
+                "6/8": "dddddd 76 77 77 76 77 77 60 30 30 60 30 30",
+                //"9/8": "ddd 76 77 77 60 30 30",
+                //"12/8": "dddd 76 77 77 77 60 30 30 30"
+            };
+            const meter = this.visualObj[0].getMeterFraction().num + "/" + this.visualObj[0].getMeterFraction().den
             const audioParams = {
-                program: instrumentNumber //number
+                program: this.instrument, //number
+                drum: drumBeats[meter],
+                drumBars: 1,
+                drumIntro: 2
             }
             const synthControl = new abcjs.synth.SynthController()
-            synthControl.setTune(visualObj,false,audioParams)
+            synthControl.setTune(this.visualObj[0],false,audioParams)
             synthControl.play()
             return synthControl
-        },
-        async playBeat(){
-            let meter,qpm,key
-            this.abc.split('\n').forEach(directive => {
-                if (/^M:/.test(directive)) meter = directive
-                else if (/^Q:/.test(directive)) qpm = directive
-                else if (/^K:/.test(directive)) key = directive
-            });
-
-            const length = `L: 1/${this.visualObj[0].getMeterFraction().den}`
-
-            const notesCountPerMeasure = this.visualObj[0].getMeterFraction().num
-            let notes = "D"
-            for (let i=1;i<notesCountPerMeasure;i++) notes = notes + "D"
-
-            const abcString = `${meter}\n${length}\n${qpm}\n${key}\n${notes}`
-            const visualObj = abcjs.renderAbc("*",abcString) //sound only
-
-            this.synthControl = this.playSound(visualObj[0],128)
-            return visualObj[0].millisecondsPerMeasure()
-        },
-        async playAll(){
-            const millisecondsPerMeasure = await this.playBeat()
-            const timeout = millisecondsPerMeasure
-            setTimeout(() => {
-                this.synthControl = this.playSound(this.visualObj[0],this.instrument)
-            }, timeout);
         },
         submit(result){
             axios.put(`${setting.server}/menu/${this._id}/result`,{
