@@ -49,6 +49,7 @@ export default {
 <style scoped>
 textarea {
     width: 95%;
+    font-size: 16px;
 }
 #content {
     position: fixed;
