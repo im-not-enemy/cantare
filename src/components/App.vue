@@ -7,11 +7,15 @@
         </div>
         <transition>
             <div class="side-bar" v-show="show" v-touch:swipe.left="hide">
-                <router-link to="/studio">studio</router-link><br> 
-                <router-link to="/menulist">menulist</router-link><br>
-                <router-link to="/training">training</router-link><br> 
-                <button @click="enable" v-if="!(full)">full: enable</button>
-                <button @click="disable" v-if="full">full: disable</button>
+                <div><router-link to="/studio">Studio</router-link></div>
+                <div><router-link to="/menulist">Menulist</router-link></div>
+                <div><router-link to="/training">Training</router-link></div>
+                <button @click="enable" v-if="!(full)">
+                    <font-awesome-icon icon="expand"/>
+                </button>
+                <button @click="disable" v-if="full">
+                    <font-awesome-icon icon="compress"/>
+                </button>
             </div>
         </transition>
         <router-view></router-view>
@@ -51,6 +55,11 @@ export default {
     transform: translateX(-200px);
     opacity: 0;
 }
+a {
+    color: #444444;
+    text-decoration: none;
+
+}
 * {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
 }
@@ -65,8 +74,9 @@ export default {
     width: 200px;
     z-index: 100;
 }
-.side-bar * {
-    margin: 5px;
+.side-bar > * {
+    margin: 10px;
+    font-size: 16px;
 }
 router-view {
     position: fixed;
