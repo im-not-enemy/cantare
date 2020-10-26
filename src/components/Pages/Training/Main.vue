@@ -71,7 +71,6 @@ export default {
             this.synthControl.pause()
         },
         playNote(visualObj){
-            const ctx = new AudioContext()
             const audioParams = {
                 program: this.instrument //number
             }
@@ -80,7 +79,6 @@ export default {
             synthControl.play()
         },
         playSong(){
-            const ctx = new AudioContext()
             const drumBeats = {
                 "2/4": "dd 76 77 60 30",
                 "3/4": "ddd 76 77 77 60 30 30",
