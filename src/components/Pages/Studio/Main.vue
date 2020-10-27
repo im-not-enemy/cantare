@@ -9,7 +9,9 @@
             <button class="play" @click="play">
                 <font-awesome-icon icon="play"/>
             </button>
-            <Submit></Submit>
+            <button class="save" @click="save">
+                <font-awesome-icon icon="save"/>
+            </button>
         </div>
     </div>
 </template>
@@ -18,7 +20,6 @@
 import abcjs from 'abcjs'
 import axios from 'axios'
 import setting from '../../../conf/setting'
-import Submit from './Buttons/Submit'
 
 export default {
     data(){
@@ -29,6 +30,9 @@ export default {
     methods:{
         play(){
             this.editer.synth.synthControl.play()
+        },
+        save(){
+            axios.post(`${setting.server}/menu?`,{abc: abc.value})
         }
     },
     mounted(){
@@ -43,8 +47,7 @@ export default {
                 el: "#synth"
             }
         });
-    },
-    components: {Submit}
+    }
 }
 </script>
 
@@ -80,7 +83,7 @@ textarea {
     flex-direction: row;
     justify-content: center;
 }
-.play {
+button {
     margin: 20px 10px;
     font-size: 16px;
 }
