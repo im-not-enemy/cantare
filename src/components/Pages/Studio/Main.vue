@@ -24,12 +24,12 @@ import setting from '../../../conf/setting'
 export default {
     data(){
         return {
-            editer: undefined
+            editor: undefined
         }
     },
     methods:{
         play(){
-            this.editer.synth.synthControl.play()
+            this.editor.synth.synthControl.play()
         },
         save(){
             axios.post(`${setting.server}/menu?`,{abc: abc.value})
@@ -37,7 +37,7 @@ export default {
     },
     mounted(){
         document.getElementById('abc').value = `T: Demo\nM: 4/4\nL: 1/4\nQ: "Allegro"\nK: C\nC E G z | G E C z | C C E E | G E C z ||`
-		this.editer = new abcjs.Editor("abc", {
+		this.editor = new abcjs.Editor("abc", {
 			canvas_id: "canvas",
 			abcjsParams: {
                 staffwidth: content.clientWidth, //contentの幅いっぱいに表示
