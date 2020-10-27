@@ -1,20 +1,31 @@
 <template>
-    <div class="content" v-if="show">
-        <div id="card" @click="turn"
-         v-touch:swipe.left="slidLeft"
-         v-touch:swipe.right="slidRight"
-         :class="{slidLeft: slid, slidRight: !slid}"
-        >
-            <div v-show="state === 'front'">
+    <div>
+        <div class="main" v-if="show">
+            <div id="card" @click="editMode=!editMode;if(editMode)slidRight()"
+             v-touch:swipe.left="slidLeft"
+             v-touch:swipe.right="slidRight"
+             :class="{slidLeft: slid, slidRight: !slid}"
+            >
                 <div :id="_uid"></div>
-                <div :class="data._id"></div>
+                <div id="synth"></div>
             </div>
-            <div v-show="state === 'back'">
-                <p>{{data.abc}}</p>
+            <div class="delete" @click="remove">
+                削除
             </div>
         </div>
-        <div class="delete" @click="remove">
-            削除
+        <div class="editor" v-if="show" v-show="editMode">
+            <textarea :id="data._id" cols="80" rows="6" v-model="data.abc"></textarea>
+            <div class="buttons">
+                <button @click="play">
+                    <font-awesome-icon icon="play"/>
+                </button>
+                <button @click="submit">
+                    <font-awesome-icon icon="save"/>
+                </button>
+                <button @click="copy">
+                    <font-awesome-icon icon="clipboard"/>
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -30,18 +41,21 @@ export default {
         return {
             show: true,
             slid: false,
-            state: "front" // or "back"
+            editMode: false,
+            editor: undefined
         }
     },
     mounted(){
-        abcjs.renderAbc(String(this._uid),this.data.abc,{
-            paddingleft: 0,
-            paddingright: 0,
-            paddingtop: 0,
-            paddingbottom: 0,
-            staffwidth: this.width - 5,
-            responsive: "resize"
-        })
+		this.editor = new abcjs.Editor(this.data._id, {
+			canvas_id: this._uid,
+			abcjsParams: {
+                staffwidth: content.clientWidth, //contentの幅いっぱいに表示
+                responsive: "resize"
+            },
+            synth: { 
+                el: "#synth"
+            }
+        });
     },
     methods: {
         remove(){
@@ -54,13 +68,23 @@ export default {
                     console.log(res)
                 }
             })
-            console.log("------------")
         },
-        turn(){
-            this.state = this.state === "front" ? "back" : "front"
+        play(){
+            this.editor.synth.synthControl.play()
+        },
+        copy(){
+            document.getElementById(this.data._id).select()
+            document.execCommand('Copy')
+            window.getSelection().removeAllRanges()
+            document.getElementById(this.data._id).blur()
+        },
+        submit(){
+            axios.put(`${setting.server}/menu/${this.data._id}`,{
+                abc: this.data.abc
+            })
         },
         slidLeft(){
-            this.slid = true
+            if(!this.editMode) this.slid = true
         },
         slidRight(){
             this.slid = false
@@ -70,7 +94,7 @@ export default {
 </script>
 
 <style scoped>
-.content {
+.main {
     position: relative;
 }
 #card {
@@ -80,14 +104,6 @@ export default {
     margin-bottom: 1px;
     width: 100%;
     background: whitesmoke;
-}
-.buttons {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: white;
-    box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
-    padding: 5px;
 }
 .delete {
     position: absolute;
@@ -112,5 +128,24 @@ p {
 }
 .slidRight {
     transition-duration: 0.5s;
+}
+.editor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+button {
+    margin: 5px;
+}
+textarea {
+    width: 95%;
+    font-size: 16px;
+    color:#444444;
 }
 </style>
