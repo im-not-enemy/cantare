@@ -1,11 +1,14 @@
 <template>
-    <div>
-        <div class="main" v-if="show">
-            <div id="card" @click="editMode=!editMode;if(editMode)slidRight()"
+    <div v-if="show" class="content">
+        <div class="main">
+            <div id="card"
              v-touch:swipe.left="slidLeft"
              v-touch:swipe.right="slidRight"
              :class="{slidLeft: slid, slidRight: !slid}"
             >
+                <button class="editButton" @click="editMode=!editMode">
+                    <font-awesome-icon icon="edit"/>
+                </button>
                 <div :id="_uid"></div>
                 <div id="synth"></div>
             </div>
@@ -13,7 +16,8 @@
                 削除
             </div>
         </div>
-        <div class="editor" v-if="show" v-show="editMode">
+        <transition>
+        <div class="editor" v-show="editMode">
             <textarea :id="data._id" cols="80" rows="6" v-model="data.abc"></textarea>
             <div class="buttons">
                 <button @click="play">
@@ -27,6 +31,7 @@
                 </button>
             </div>
         </div>
+        </transition>
     </div>
 </template>
 
@@ -88,12 +93,15 @@ export default {
         },
         slidRight(){
             this.slid = false
-        }
-    }
+        },
+    },
 }
 </script>
 
 <style scoped>
+.content {
+    position: relative;
+}
 .main {
     position: relative;
 }
@@ -104,6 +112,12 @@ export default {
     margin-bottom: 1px;
     width: 100%;
     background: whitesmoke;
+}
+.editor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 170px;
 }
 .delete {
     position: absolute;
@@ -129,16 +143,10 @@ p {
 .slidRight {
     transition-duration: 0.5s;
 }
-.editor {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 .buttons {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-bottom: 10px;
 }
 button {
     margin: 5px;
@@ -147,5 +155,18 @@ textarea {
     width: 95%;
     font-size: 16px;
     color:#444444;
+}
+.v-enter, .v-leave-to {
+    height: 0;
+}
+.v-enter-active, .v-leave-active {
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+.editButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
 }
 </style>
