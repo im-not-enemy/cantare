@@ -19,16 +19,23 @@
             </div>
         </transition>
         <router-view></router-view>
+        <transition name="fade">
+            <div class="welcome" v-if="!firstSoundPlayed">
+                <button @click="play">play</button>
+            </div>
+        </transition>
     </div>
 </template>
 
 <script>
-
 export default {
     data: function(){
         return {
             show: false,
-            full: false
+            full: false,
+            firstSoundPlayed: false,
+            audioSource: undefined,
+            testText: "black"
         }
     },
     methods: {
@@ -43,11 +50,36 @@ export default {
             document.exitFullscreen()
             this.full = false
         },
+        play(){
+            this.firstSoundPlayed = true
+            this.audioSource.start(0)
+        }
+    },
+    async mounted(){
+        const context = new (AudioContext||webkitAudioContext)()
+        const response = await fetch("./mp3/people-performance-cheer1.mp3")
+        const arrayBuffer = await response.arrayBuffer()
+        context.decodeAudioData(
+            arrayBuffer,
+            (audioBuffer)=>{
+                this.audioSource = context.createBufferSource()
+                this.audioSource.buffer = audioBuffer
+                this.audioSource.connect(context.destination)
+            }
+        )
+        console.log(context)
     }
 }
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+    transition-property: opacity;
+    transition-duration: 1.5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
 .v-enter-active, .v-leave-active {
     transition-duration: 0.3s;
 }
@@ -101,5 +133,17 @@ router-view {
 }
 .header > button {
     font-size: 16px;
+}
+.welcome {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100vh;
+    background: navy;
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
