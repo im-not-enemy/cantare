@@ -56,18 +56,17 @@ export default {
         }
     },
     async mounted(){
-        const context = new (AudioContext||webkitAudioContext)()
+        window.abcjsAudioContext = new (AudioContext||webkitAudioContext)()
         const response = await fetch("./mp3/people-performance-cheer1.mp3")
         const arrayBuffer = await response.arrayBuffer()
-        context.decodeAudioData(
+        window.abcjsAudioContext.decodeAudioData(
             arrayBuffer,
             (audioBuffer)=>{
-                this.audioSource = context.createBufferSource()
+                this.audioSource = window.abcjsAudioContext.createBufferSource()
                 this.audioSource.buffer = audioBuffer
-                this.audioSource.connect(context.destination)
+                this.audioSource.connect(window.abcjsAudioContext.destination)
             }
         )
-        console.log(context)
     }
 }
 </script>
