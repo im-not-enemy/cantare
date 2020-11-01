@@ -6,8 +6,11 @@
             <textarea id="abc" cols="80" rows="6"></textarea>
         </div>
         <div id="commandBar">
-            <button class="play" @click="play">
+            <button class="play" @click="play" v-if="!playing">
                 <font-awesome-icon icon="play"/>
+            </button>
+            <button class="play" @click="play" v-if="playing">
+                <font-awesome-icon icon="pause"/>
             </button>
             <button class="save" @click="save">
                 <font-awesome-icon icon="save"/>
@@ -24,12 +27,18 @@ import setting from '../../../conf/setting'
 export default {
     data(){
         return {
-            editor: undefined
+            editor: undefined,
+            playing: false
         }
     },
     methods:{
+        onEnded(){
+            this.playing = false
+        },
         play(){
             this.editor.synth.synthControl.play()
+            this.editor.synth.synthControl.midiBuffer.onEnded = this.onEnded
+            this.playing = true
         },
         save(){
             axios.post(`${setting.server}/menu?`,{abc: abc.value})
