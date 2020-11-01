@@ -2,6 +2,7 @@
     <div id="app">
         <div id="content" v-if="!(err)">
             <div id="paper"></div>
+            <div id="audio"></div>
             <select v-model="instrument">
                 <option value="1" default>Piano</option>
                 <option value="10" default>Glocken</option>
@@ -11,7 +12,7 @@
                 <option value="53">Voice</option>
             </select>
             <div class="buttons">
-                <button @click="playSong()">
+                <button id="playButton" @click="playSong()">
                     <font-awesome-icon icon="play"/>
                 </button>
                 <button @click="stop()">
@@ -21,7 +22,7 @@
                     <font-awesome-icon icon="step-forward"/>
                 </button>
             </div>
-            <div>{{clicked}}</div>
+            <div>clicked: {{clicked}}</div>
         </div>
         <div v-if="err">
             {{err}}
@@ -45,7 +46,8 @@ export default {
             visualObj: undefined,
             instrument: 1,
             clicked: [],
-            synthControl: undefined
+            synthControl: undefined,
+            playing: false
         }
     },
     methods: {
@@ -78,6 +80,9 @@ export default {
             synthControl.setTune(visualObj[0],false,audioParams)
             synthControl.play()
         },
+        onEnded(){
+            this.playing = false
+        },
         playSong(){
             const drumBeats = {
                 "2/4": "dd 76 77 60 30",
@@ -99,7 +104,9 @@ export default {
             const synthControl = new abcjs.synth.SynthController()
             synthControl.setTune(this.visualObj[0],false,audioParams)
             synthControl.play()
+            synthControl.midiBuffer.onEnded = this.onEnded
             this.synthControl = synthControl
+            this.playing = true
         }
     },
     mounted(){
@@ -117,6 +124,9 @@ export default {
                 clickListener: this.clickListener,
                 responsive: "resize"
             })
+        },
+        playing(){
+            document.getElementById('playButton').disabled = this.playing
         }
     }
 }
