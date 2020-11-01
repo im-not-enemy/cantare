@@ -100,12 +100,6 @@ export default {
             synthControl.setTune(this.visualObj[0],false,audioParams)
             synthControl.play()
             this.synthControl = synthControl
-        },
-        submit(result){
-            axios.put(`${setting.server}/menu/${this._id}/result`,{
-                timestamp: moment(),
-                result: result
-            })
         }
     },
     mounted(){
