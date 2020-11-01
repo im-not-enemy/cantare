@@ -20,8 +20,11 @@
         <div class="editor" v-show="editMode">
             <textarea :id="data._id" cols="80" rows="6" v-model="data.abc"></textarea>
             <div class="buttons">
-                <button @click="play">
+                <button @click="play" v-if="!playing">
                     <font-awesome-icon icon="play"/>
+                </button>
+                <button @click="play" v-if="playing">
+                    <font-awesome-icon icon="pause"/>
                 </button>
                 <button @click="submit">
                     <font-awesome-icon icon="save"/>
@@ -47,7 +50,8 @@ export default {
             show: true,
             slid: false,
             editMode: false,
-            editor: undefined
+            editor: undefined,
+            playing: false
         }
     },
     mounted(){
@@ -74,8 +78,13 @@ export default {
                 }
             })
         },
+        onEnded(){
+            this.playing = false
+        },
         play(){
             this.editor.synth.synthControl.play()
+            this.editor.synth.synthControl.midiBuffer.onEnded = this.onEnded
+            this.playing = true
         },
         copy(){
             document.getElementById(this.data._id).select()
