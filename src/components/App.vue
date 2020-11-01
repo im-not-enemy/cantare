@@ -35,7 +35,6 @@ export default {
             full: false,
             firstSoundPlayed: false,
             audioSource: undefined,
-            testText: "black"
         }
     },
     methods: {
