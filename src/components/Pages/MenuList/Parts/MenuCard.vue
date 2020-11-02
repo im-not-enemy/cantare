@@ -93,7 +93,7 @@ export default {
             document.getElementById(this.data._id).blur()
         },
         submit(){
-            axios.put(`${setting.server}/menu/${this.data._id}`,{
+            axios.put(`${setting.server}/menu/${this.data._id}/abc`,{
                 abc: this.data.abc
             })
         },
