@@ -21,6 +21,9 @@
                 <button @click="request()">
                     <font-awesome-icon icon="step-forward"/>
                 </button>
+                <button @click="switchRemembered()" :class="{remembered: remembered}">
+                    <font-awesome-icon icon="check-square"/>
+                </button>
             </div>
             <div>clicked: {{clicked}}</div>
         </div>
@@ -42,6 +45,7 @@ export default {
         return {
             abc: undefined,
             _id: undefined,
+            remembered: undefined,
             err: undefined,
             visualObj: undefined,
             instrument: 1,
@@ -56,6 +60,7 @@ export default {
             .then(res => {
                 this.abc = res.data[0].abc
                 this._id = res.data[0]._id
+                this.remembered = res.data[0].remembered
             })
             .catch(err => {
                 this.err = err
@@ -159,5 +164,8 @@ button {
 select {
     width: 120px;
     margin: 10px;
+}
+.remembered {
+    color: #339933; 
 }
 </style>
