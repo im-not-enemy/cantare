@@ -6,9 +6,14 @@
              v-touch:swipe.right="slidRight"
              :class="{slidLeft: slid, slidRight: !slid}"
             >
-                <button class="editButton" @click="editMode=!editMode">
-                    <font-awesome-icon icon="edit"/>
-                </button>
+                <div class="buttons">
+                    <button class="editButton" @click="editMode=!editMode">
+                        <font-awesome-icon icon="edit"/>
+                    </button>
+                    <button @click="switchRemembered" :class="{remembered: data.remembered}">
+                        <font-awesome-icon icon="check-square"/>
+                    </button>
+                </div>
                 <div :id="_uid"></div>
                 <div id="synth"></div>
             </div>
@@ -67,6 +72,12 @@ export default {
         });
     },
     methods: {
+        switchRemembered(){
+            this.data.remembered = !this.data.remembered
+            axios.put(`${setting.server}/menu/${this.data._id}/remembered`,{
+                remembered: this.data.remembered
+            })
+        },
         remove(){
             axios.delete(`${setting.server}/menu/${this.data._id}`)
             .then(res => {
@@ -152,7 +163,7 @@ p {
 .slidRight {
     transition-duration: 0.5s;
 }
-.buttons {
+.editor > .buttons {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -172,7 +183,10 @@ textarea {
     transition-property: all;
     transition-duration: 0.5s;
 }
-.editButton {
+.remembered {
+    color: #339933; 
+}
+.main .buttons {
     position: absolute;
     top: 10px;
     left: 10px;
