@@ -112,7 +112,13 @@ export default {
             synthControl.midiBuffer.onEnded = this.onEnded
             this.synthControl = synthControl
             this.playing = true
-        }
+        },
+        switchRemembered(){
+            this.remembered = !this.remembered
+            axios.put(`${setting.server}/menu/${this._id}/remembered`,{
+                remembered: this.remembered
+            })
+        },
     },
     mounted(){
         this.request()
