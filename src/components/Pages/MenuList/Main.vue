@@ -6,6 +6,11 @@
             </div>
         </div>
         <div class="err" v-if="err">{{err}}</div>
+        <div class="footer">
+            <div class="pagination">
+                <button v-for="p in pages" :key="p" @click="page = p">{{p}}</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -19,18 +24,30 @@ export default {
         return {
             items: undefined,
             width: 100,
-            err: undefined
+            err: undefined,
+            page: 1,
+            pages: [],
+            menusPerPage: setting.menulist.menusPerPage,
+            totalCount: 0
         }
     },
+    methods: {
+        fetchMenu(page){
+            axios.get(`${setting.server}/menu?page=${page}`).then(res=>{this.items = res.data})
+        }
+    },
+    watch: {
+        page: function(){this.fetchMenu(this.page)}
+    },
     mounted(){
-        axios.get(`${setting.server}/menu`)
-        .then(res=>{
-            this.items = res.data
-        })
-        .catch(err=>{
-            this.err = err
-        })
         this.width = document.getElementById('app').clientWidth
+        this.fetchMenu(this.page)
+
+        axios.get(`${setting.server}/menu/totalCount`).then(res=>{
+            this.totalCount = parseInt(res.data)
+            const maxPageCount = Math.ceil(this.totalCount / this.menusPerPage)
+            for (let i=1;i<=maxPageCount;i++) this.pages.push(i)
+        })
     },
     components: {MenuCard}
 }
@@ -41,6 +58,7 @@ export default {
     position: absolute;
     top: 30px;
     padding-top: 6px;
+    margin-bottom: 30px;
     left: 0;
     width: 100%;
     z-index: 50;
@@ -60,5 +78,18 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.footer {
+    background: white;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 30px;
+    width: 100%;
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
