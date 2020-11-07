@@ -21,13 +21,26 @@
         <router-view></router-view>
         <transition name="fade">
             <div class="welcome" v-if="!firstSoundPlayed">
-                <button @click="play">play</button>
+                <div class="meigen">
+                    {{meigen.message}}
+                </div>
+                <div class="buttons">
+                    <button @click="like">
+                        <font-awesome-icon icon="thumbs-up"/>
+                    </button>
+                    <button @click="dislike">
+                        <font-awesome-icon icon="thumbs-down"/>
+                    </button>
+                </div>
             </div>
         </transition>
     </div>
 </template>
 
 <script>
+import setting from '../conf/setting'
+import axios from 'axios'
+
 export default {
     data: function(){
         return {
@@ -35,6 +48,10 @@ export default {
             full: false,
             firstSoundPlayed: false,
             audioSource: undefined,
+            meigen: {
+                _id: undefined,
+                message: undefined
+            }
         }
     },
     methods: {
@@ -49,7 +66,16 @@ export default {
             document.exitFullscreen()
             this.full = false
         },
-        play(){
+        like(){
+            axios.post(`${setting.meigen}/meigen/${this.meigen._id}?like=like`)
+            this.enter()
+        },
+        dislike(){
+            axios.post(`${setting.meigen}/meigen/${this.meigen._id}?like=false`)
+            axios.get(`${setting.meigen}/meigen`)
+            .then(res => this.meigen = res.data[0])
+        },
+        enter(){
             this.firstSoundPlayed = true
             this.audioSource.start(0)
         }
@@ -66,6 +92,8 @@ export default {
                 this.audioSource.connect(window.abcjsAudioContext.destination)
             }
         )
+        axios.get(`${setting.meigen}/meigen`)
+        .then(res => this.meigen = res.data[0])
     }
 }
 </script>
@@ -138,10 +166,23 @@ router-view {
     left:0;
     width:100%;
     height: 100vh;
-    background: navy;
+    background: #555555;
     z-index: 200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.meigen {
+    color: white;
+    width: 80%;
+}
+.meigen > .buttons {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.buttons > button {
+    margin: 10px 5px;
 }
 </style>
