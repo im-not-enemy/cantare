@@ -76,7 +76,7 @@ export default {
             this.full = false
         },
         like(){
-            //axios.post(`${setting.meigen}/meigen/${this.meigen._id}?like=like`)
+            axios.post(`${setting.meigen}/meigen/${this.meigen._id}?like=like`)
             this.enter()
         },
         dislike(){
