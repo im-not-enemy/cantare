@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import studio from '../components/Pages/Studio/Main.vue'
 import menulist from '../components/Pages/MenuList/Main.vue'
 import training from '../components/Pages/Training/Main.vue'
+import analysis from '../components/Pages/Analysis/Main.vue'
 
 Vue.use(Router)
 
@@ -21,5 +22,9 @@ export default new Router({
             path: '/training',
             component: training
         },
+        {
+            path: '/analysis',
+            component: analysis
+        }
     ]
 })

@@ -10,6 +10,7 @@
                 <div><router-link to="/studio">Studio</router-link></div>
                 <div><router-link to="/menulist">Menulist</router-link></div>
                 <div><router-link to="/training">Training</router-link></div>
+                <div><router-link to="/analysis">Analysis</router-link></div>
                 <button @click="enable" v-if="!(full)">
                     <font-awesome-icon icon="expand"/>
                 </button>
