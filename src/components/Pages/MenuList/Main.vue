@@ -43,7 +43,7 @@ export default {
         this.width = document.getElementById('app').clientWidth
         this.fetchMenu(this.page)
 
-        axios.get(`${setting.server}/menu/totalCount`).then(res=>{
+        axios.get(`${setting.server}/menu/count/all`).then(res=>{
             this.totalCount = parseInt(res.data)
             const maxPageCount = Math.ceil(this.totalCount / this.menusPerPage)
             for (let i=1;i<=maxPageCount;i++) this.pages.push(i)
