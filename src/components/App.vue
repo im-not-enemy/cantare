@@ -219,9 +219,9 @@ router-view {
     align-items: center;
 }
 .popup > div {
-    background: gray;
+    background: black;
     color: white;
-    opacity: 0.9;
+    opacity: 0.6;
     height: 100%;
     width: 99%;
     border-radius: 20px;
