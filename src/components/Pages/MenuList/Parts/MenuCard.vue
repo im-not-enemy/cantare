@@ -77,6 +77,12 @@ export default {
             axios.put(`${setting.server}/menu/${this.data._id}/remembered`,{
                 remembered: this.data.remembered
             })
+            .then(res=>{
+                let message
+                if (this.data.remembered) message = "remembered!"
+                else message = "forgot!"
+                this.$emit('popup', message)
+            })
         },
         remove(){
             axios.delete(`${setting.server}/menu/${this.data._id}`)
@@ -102,10 +108,16 @@ export default {
             document.execCommand('Copy')
             window.getSelection().removeAllRanges()
             document.getElementById(this.data._id).blur()
+            const message = "copied!"
+            this.$emit('popup',message)
         },
         submit(){
             axios.put(`${setting.server}/menu/${this.data._id}/abc`,{
                 abc: this.data.abc
+            })
+            .then(res=>{
+                const message = "saved!"
+                this.$emit('popup',message)
             })
         },
         slidLeft(){

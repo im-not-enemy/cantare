@@ -18,7 +18,7 @@
                 </button>
             </div>
         </transition>
-        <router-view></router-view>
+        <router-view v-on:popup="showPopup"></router-view>
         <transition name="fade">
             <div class="welcome" v-if="!firstSoundPlayed">
                 <div class="meigen">
@@ -32,6 +32,11 @@
                         <font-awesome-icon icon="thumbs-down"/>
                     </button>
                 </div>
+            </div>
+        </transition>
+        <transition name="slide">
+            <div v-if="popup.show" class="popup" @click="popup.show = false">
+                <div>{{popup.message}}</div>
             </div>
         </transition>
     </div>
@@ -51,6 +56,10 @@ export default {
             meigen: {
                 _id: undefined,
                 message: undefined
+            },
+            popup: {
+                show: false,
+                message: undefined
             }
         }
     },
@@ -67,7 +76,7 @@ export default {
             this.full = false
         },
         like(){
-            axios.post(`${setting.meigen}/meigen/${this.meigen._id}?like=like`)
+            //axios.post(`${setting.meigen}/meigen/${this.meigen._id}?like=like`)
             this.enter()
         },
         dislike(){
@@ -78,6 +87,13 @@ export default {
         enter(){
             this.firstSoundPlayed = true
             this.audioSource.start(0)
+        },
+        showPopup(message){
+            this.popup.show = true
+            this.popup.message = message
+            setTimeout(() => {
+                this.popup.show = false
+            }, 3000);
         }
     },
     async mounted(){
@@ -113,10 +129,16 @@ export default {
     transform: translateX(-200px);
     opacity: 0;
 }
+.slide-enter-active, .slide-leave-active {
+    transition-duration: 0.5s;
+}
+.slide-enter, .slide-leave-to {
+    transform: translateY(-90px);
+    opacity: 0;
+}
 a {
     color: #444444;
     text-decoration: none;
-
 }
 * {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -184,5 +206,27 @@ router-view {
 }
 .buttons > button {
     margin: 10px 5px;
+}
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 90px;
+    width: 100%;
+    z-index: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup > div {
+    background: gray;
+    color: white;
+    opacity: 0.9;
+    height: 100%;
+    width: 99%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>

@@ -2,7 +2,7 @@
     <div id="app">
         <div id="content" v-if="!(err)">
             <div v-for="item in items" :key="item._id">
-                <MenuCard :data="item" :width="width"></MenuCard>
+                <MenuCard :data="item" :width="width" @popup="(msg)=>$emit('popup',msg)"></MenuCard>
             </div>
         </div>
         <div class="err" v-if="err">{{err}}</div>

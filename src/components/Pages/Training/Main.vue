@@ -118,6 +118,12 @@ export default {
             axios.put(`${setting.server}/menu/${this._id}/remembered`,{
                 remembered: this.remembered
             })
+            .then(res=>{
+                let message
+                if (this.remembered) message = "remembered!"
+                else message = "forgot!"
+                this.$emit('popup', message)
+            })
         },
     },
     mounted(){

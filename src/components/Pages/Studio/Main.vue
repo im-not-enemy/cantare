@@ -42,6 +42,9 @@ export default {
         },
         save(){
             axios.post(`${setting.server}/menu?`,{abc: abc.value})
+            .then(res => {
+                this.$emit('popup','saved!')
+            })
         }
     },
     mounted(){
