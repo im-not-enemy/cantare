@@ -23,12 +23,12 @@ export default {
 
         await axios.get(`${setting.server}/menu/count/all`).then(res=>total = res.data)
         await axios.get(`${setting.server}/menu/count/remembered`).then(res=>remembered=res.data)
-        const progress = total - remembered
+        const inprogress = total - remembered
 
         this.chartdata = {
-            labels: ['remembered','progress'],
+            labels: ['remembered','inprogress'],
             datasets: [{
-                data: [remembered, progress],
+                data: [remembered, inprogress],
                 backgroundColor: [
                     'rgba(51,153,51,1)'/*#339933*/,'rgba(192,192,192,1)'/*#C0C0C0*/
                 ]
