@@ -1,37 +1,16 @@
 <template>
     <div id="app">
         <h1>Analysis</h1>
-        [menu]<br>
-        total: {{menu.total}}<br>
-        remembered: {{menu.remembered}}<br>
-        rate: {{rate * 100}}%
+        <PieContainer></PieContainer>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
-import setting from '../../../conf/setting'
+import PieContainer from './Charts/PieContainer.vue'
 
 export default {
-    data(){
-        return {
-            menu: {
-                total: 0,
-                remembered: 0,
-            }
-        }
-    },
-    mounted(){
-        axios.get(`${setting.server}/menu/count/all`)
-        .then(res => this.menu.total = res.data)
-
-        axios.get(`${setting.server}/menu/count/remembered`)
-        .then(res => this.menu.remembered = res.data)
-    },
-    computed: {
-        rate(){
-            return Math.round(this.menu.remembered/this.menu.total*100)/100
-        }
+    components: {
+        PieContainer
     }
 }
 </script>
@@ -48,10 +27,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-/*
-    z-index: 50;
-*/
-/*    justify-content: center; */
 }
 
 </style>
