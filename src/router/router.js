@@ -19,8 +19,18 @@ export default new Router({
             component: menulist
         },
         {
-            path: '/training',
-            component: training
+            path: '/training/random/all',
+            component: training,
+            props: {
+                mode: 'random-all'
+            }
+        },
+        {
+            path: '/training/random/inprogress',
+            component: training,
+            props: {
+                mode: 'random-inprogress'
+            }
         },
         {
             path: '/analysis',

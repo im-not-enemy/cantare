@@ -41,6 +41,9 @@ import abcjs from 'abcjs'
 import pitchToAbc from '../../../common/pitchToAbc'
 
 export default {
+    props: {
+        mode: {type: String}
+    },
     data(){
         return {
             abc: undefined,
@@ -51,12 +54,13 @@ export default {
             instrument: 1,
             clicked: [],
             synthControl: undefined,
-            playing: false
+            playing: false,
+            uri: undefined
         }
     },
     methods: {
         request(){
-            axios.get(`${setting.server}/question/random/all`)
+            axios.get(this.uri)
             .then(res => {
                 this.abc = res.data[0].abc
                 this._id = res.data[0]._id
@@ -125,11 +129,21 @@ export default {
                 this.$emit('popup', message)
             })
         },
+        setUri(){
+            if (this.mode === "random-all") this.uri = `${setting.server}/question/random/all`
+            else if (this.mode === "random-inprogress") this.uri = `${setting.server}/question/random/inprogress`
+            else this.uri = `${setting.server}/question/random/all`
+        }
     },
     mounted(){
+        this.setUri()
         this.request()
     },
     watch: {
+        mode(){
+            this.setUri()
+            this.request()
+        },
         abc(){
             this.visualObj = abcjs.renderAbc("paper",this.abc,{
                 paddingleft: 0,

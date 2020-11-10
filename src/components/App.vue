@@ -9,7 +9,11 @@
             <div class="side-bar" v-show="show" v-touch:swipe.left="hide">
                 <div><router-link to="/studio">Studio</router-link></div>
                 <div><router-link to="/menulist">Menulist</router-link></div>
-                <div><router-link to="/training">Training</router-link></div>
+                <div>Training</div>
+                <ul>
+                    <li><router-link to="/training/random/all">All</router-link></li>
+                    <li><router-link to="/training/random/inprogress">Inprogress</router-link></li>
+                </ul>
                 <div><router-link to="/analysis">Analysis</router-link></div>
                 <button @click="enable" v-if="!(full)">
                     <font-awesome-icon icon="expand"/>
@@ -230,5 +234,12 @@ router-view {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+ul {
+    padding-left: 25px;
+    font-size: 14px;
+}
+div {
+    color: #444444;
 }
 </style>
