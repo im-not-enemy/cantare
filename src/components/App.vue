@@ -12,7 +12,7 @@
                 <div>Training</div>
                 <ul>
                     <li><router-link to="/training/random/all">All</router-link></li>
-                    <li><router-link to="/training/random/inprogress">Inprogress</router-link></li>
+                    <li><router-link to="/training/random/inprogress">Inprogress Only</router-link></li>
                 </ul>
                 <div><router-link to="/analysis">Analysis</router-link></div>
                 <button @click="enable" v-if="!(full)">
