@@ -56,7 +56,7 @@ export default {
     },
     methods: {
         request(){
-            axios.get(`${setting.server}/question/random`)
+            axios.get(`${setting.server}/question/random/all`)
             .then(res => {
                 this.abc = res.data[0].abc
                 this._id = res.data[0]._id
