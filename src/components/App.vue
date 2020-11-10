@@ -207,6 +207,7 @@ router-view {
 }
 .buttons > button {
     margin: 10px 5px;
+    font-size: 16px;
 }
 .popup {
     position: absolute;
