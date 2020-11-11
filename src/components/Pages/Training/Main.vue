@@ -24,6 +24,9 @@
                 <button @click="switchRemembered()" :class="{remembered: remembered}">
                     <font-awesome-icon icon="check-square"/>
                 </button>
+                <button @click="switchBookmarked()" :class="{bookmarked: bookmarked}">
+                    <font-awesome-icon icon="bookmark"/>
+                </button>
             </div>
             <div>clicked: {{clicked}}</div>
         </div>
@@ -49,6 +52,7 @@ export default {
             abc: undefined,
             _id: undefined,
             remembered: undefined,
+            bookmarked: undefined,
             err: undefined,
             visualObj: undefined,
             instrument: 1,
@@ -65,6 +69,7 @@ export default {
                 this.abc = res.data[0].abc
                 this._id = res.data[0]._id
                 this.remembered = res.data[0].remembered
+                this.bookmarked = res.data[0].bookmarked
             })
             .catch(err => {
                 this.err = err
@@ -126,6 +131,18 @@ export default {
                 let message
                 if (this.remembered) message = "remembered!"
                 else message = "forgot!"
+                this.$emit('popup', message)
+            })
+        },
+        switchBookmarked(){
+            this.bookmarked = !this.bookmarked
+            axios.put(`${setting.server}/menu/${this._id}/bookmarked`,{
+                bookmarked: this.bookmarked
+            })
+            .then(res=>{
+                let message
+                if (this.remembered) message = "bookmarked!"
+                else message = "unbookmarked!"
                 this.$emit('popup', message)
             })
         },
@@ -192,6 +209,9 @@ select {
     margin: 10px;
 }
 .remembered {
+    color: #339933; 
+}
+.bookmarked {
     color: #339933; 
 }
 </style>
