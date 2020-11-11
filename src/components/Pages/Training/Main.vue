@@ -66,10 +66,16 @@ export default {
         request(){
             axios.get(this.uri)
             .then(res => {
-                this.abc = res.data[0].abc
-                this._id = res.data[0]._id
-                this.remembered = res.data[0].remembered
-                this.bookmarked = res.data[0].bookmarked
+                if (res.data[0] === undefined){
+                    const message = "No content!"
+                    this.$emit('popup', message)
+                }
+                else {
+                    this.abc = res.data[0].abc
+                    this._id = res.data[0]._id
+                    this.remembered = res.data[0].remembered
+                    this.bookmarked = res.data[0].bookmarked
+                }
             })
             .catch(err => {
                 this.err = err
