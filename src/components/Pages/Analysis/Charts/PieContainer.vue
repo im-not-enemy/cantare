@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Pie v-if="loaded" :chartdata="chartdata"></Pie>
+        <Pie v-if="loaded" :chartdata="chartdata" :options="options"></Pie>
     </div>
 </template>
 
@@ -14,7 +14,8 @@ export default {
     data(){
         return {
             loaded: false,
-            chartdata: null
+            chartdata: null,
+            options: null
         }
     },
     async mounted(){
@@ -33,6 +34,11 @@ export default {
                     'rgba(51,153,51,1)'/*#339933*/,'rgba(192,192,192,1)'/*#C0C0C0*/
                 ]
             }]
+        }
+        this.options = {
+            legend: {
+                reverse: true
+            }
         }
         this.loaded = true
     }
