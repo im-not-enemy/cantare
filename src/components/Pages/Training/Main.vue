@@ -147,7 +147,7 @@ export default {
             })
             .then(res=>{
                 let message
-                if (this.remembered) message = "bookmarked!"
+                if (this.bookmarked) message = "bookmarked!"
                 else message = "unbookmarked!"
                 this.$emit('popup', message)
             })
