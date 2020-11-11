@@ -13,6 +13,9 @@
                     <button @click="switchRemembered" :class="{remembered: data.remembered}">
                         <font-awesome-icon icon="check-square"/>
                     </button>
+                    <button @click="switchBookmarked" :class="{bookmarked: data.bookmarked}">
+                        <font-awesome-icon icon="bookmark"/>
+                    </button>
                 </div>
                 <div :id="_uid"></div>
                 <div id="synth"></div>
@@ -81,6 +84,18 @@ export default {
                 let message
                 if (this.data.remembered) message = "remembered!"
                 else message = "forgot!"
+                this.$emit('popup', message)
+            })
+        },
+        switchBookmarked(){
+            this.data.bookmarked = !this.data.bookmarked
+            axios.put(`${setting.server}/menu/${this.data._id}/bookmarked`,{
+                bookmarked: this.data.bookmarked
+            })
+            .then(res=>{
+                let message
+                if (this.data.bookmarked) message = "bookmarked!"
+                else message = "unbookmarked!"
                 this.$emit('popup', message)
             })
         },
@@ -196,6 +211,9 @@ textarea {
     transition-duration: 0.5s;
 }
 .remembered {
+    color: #339933; 
+}
+.bookmarked {
     color: #339933; 
 }
 .main .buttons {
