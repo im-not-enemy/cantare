@@ -5,6 +5,7 @@ import studio from '../components/Pages/Studio/Main.vue'
 import menulist from '../components/Pages/MenuList/Main.vue'
 import training from '../components/Pages/Training/Main.vue'
 import analysis from '../components/Pages/Analysis/Main.vue'
+import precepts from '../components/Pages/Precepts/Main.vue'
 
 Vue.use(Router)
 
@@ -42,6 +43,10 @@ export default new Router({
         {
             path: '/analysis',
             component: analysis
+        },
+        {
+            path: '/precepts',
+            component: precepts
         }
     ]
 })
