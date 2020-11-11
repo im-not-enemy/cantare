@@ -33,6 +33,13 @@ export default new Router({
             }
         },
         {
+            path: '/training/random/bookmarked',
+            component: training,
+            props: {
+                mode: 'random-bookmarked'
+            }
+        },
+        {
             path: '/analysis',
             component: analysis
         }

@@ -149,6 +149,7 @@ export default {
         setUri(){
             if (this.mode === "random-all") this.uri = `${setting.server}/question/random/all`
             else if (this.mode === "random-inprogress") this.uri = `${setting.server}/question/random/inprogress`
+            else if (this.mode === "random-bookmarked") this.uri = `${setting.server}/question/random/bookmarked`
             else this.uri = `${setting.server}/question/random/all`
         }
     },
