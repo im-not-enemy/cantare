@@ -202,7 +202,6 @@ router-view {
     width:100%;
     height: 100vh;
     background: #555555;
-    opacity: 0.1;
     z-index: 200;
     display: flex;
     flex-direction: column;
