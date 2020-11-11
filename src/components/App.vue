@@ -110,6 +110,12 @@ export default {
             (audioBuffer)=>{
                 this.audioSource = window.abcjsAudioContext.createBufferSource()
                 this.audioSource.buffer = audioBuffer
+                /* volume調整 */
+                const gainNode = window.abcjsAudioContext.createGain()
+                this.audioSource.connect(gainNode)
+                gainNode.connect(window.abcjsAudioContext.destination)
+                gainNode.gain.value = -0.5
+                /* ---------- */
                 this.audioSource.connect(window.abcjsAudioContext.destination)
             }
         )
